@@ -220,15 +220,15 @@
         left: 2px;
     }
 
-    [data-theme="dark"] .toggle-switch .switch-thumb {
+    .toggle-switch[aria-pressed="true"] .switch-thumb {
         transform: translateX(24px);
     }
 
-    [data-theme="dark"] .toggle-switch:hover .switch-thumb {
+    .toggle-switch[aria-pressed="true"]:hover .switch-thumb {
         transform: translateX(24px) scale(1.08);
     }
 
-    [data-theme="dark"] .toggle-switch:active .switch-thumb {
+    .toggle-switch[aria-pressed="true"]:active .switch-thumb {
         transform: translateX(24px) scale(0.92);
     }
 
@@ -236,6 +236,18 @@
     .copyright {
         padding-top: 1.5rem;
         font-size: 0.9rem;
+    }
+
+    /* Other Projects cards */
+    .other-projects-list-group {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .other-projects-item {
+        min-height: 44px;
+        padding: 1rem 1.2rem;
+        font-size: 1.05rem;
     }
 }
 

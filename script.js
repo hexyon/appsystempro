@@ -82,10 +82,20 @@ function toggleListItem(item) {
 }
 
 function openAllWebsites() {
-    const links = document.querySelectorAll('.detail-button');
+    const otherView = document.getElementById('other-projects-view');
+    const isOtherProjectsActive = otherView && otherView.style.display !== 'none';
+    
+    let links;
+    if (isOtherProjectsActive) {
+        links = document.querySelectorAll('.other-projects-item');
+    } else {
+        links = document.querySelectorAll('.detail-button');
+    }
+    
     let blockedCount = 0;
     links.forEach(link => {
-        const opened = window.open(link.href, '_blank', 'noopener,noreferrer');
+        const href = link.href;
+        const opened = window.open(href, '_blank', 'noopener,noreferrer');
         if (!opened) blockedCount++;
     });
     if (blockedCount > 0) {
@@ -153,7 +163,67 @@ function toggleTheme(event) {
     toggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
     toggleButton.setAttribute('aria-pressed', isDark);
     const thumbLabel = document.getElementById('switch-thumb-label');
-    if (thumbLabel) thumbLabel.textContent = isDark ? 'D' : 'L';
+    if (thumbLabel) thumbLabel.innerHTML = isDark
+        ? '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>'
+        : '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+}
+
+function toggleOtherProjectsView(event) {
+    if (event) event.stopPropagation();
+
+    const defaultView = document.getElementById('default-projects-view');
+    const otherView = document.getElementById('other-projects-view');
+    const toggleButton = document.getElementById('other-projects-toggle');
+    const thumbLabel = document.getElementById('other-projects-thumb-label');
+    const titleEl = document.getElementById('app-title');
+    if (!defaultView || !otherView || !toggleButton) return;
+
+    const isShowingOther = otherView.style.display !== 'none';
+    const showOther = !isShowingOther;
+
+    defaultView.style.display = showOther ? 'none' : '';
+    otherView.style.display = showOther ? '' : 'none';
+
+    toggleButton.setAttribute('aria-pressed', showOther);
+    toggleButton.setAttribute('aria-label', showOther ? 'Switch back to your projects' : 'Switch to other projects');
+    if (thumbLabel) thumbLabel.innerHTML = showOther
+        ? '<i class="fas fa-globe" aria-hidden="true"></i>'
+        : '<i class="fas fa-house" aria-hidden="true"></i>';
+    if (titleEl) titleEl.textContent = showOther ? 'Other Projects' : 'AppSystem Pro';
+
+    try {
+        localStorage.setItem('other-projects-view', showOther ? 'true' : 'false');
+    } catch (error) {
+        console.warn('Could not persist other projects view preference:', error);
+    }
+}
+
+function loadOtherProjectsPreference() {
+    let showOther = false;
+    try {
+        showOther = localStorage.getItem('other-projects-view') === 'true';
+    } catch (error) {
+        console.warn('Could not read other projects view preference:', error);
+    }
+
+    const defaultView = document.getElementById('default-projects-view');
+    const otherView = document.getElementById('other-projects-view');
+    const toggleButton = document.getElementById('other-projects-toggle');
+    const thumbLabel = document.getElementById('other-projects-thumb-label');
+    const titleEl = document.getElementById('app-title');
+    if (!defaultView || !otherView) return;
+
+    defaultView.style.display = showOther ? 'none' : '';
+    otherView.style.display = showOther ? '' : 'none';
+
+    if (toggleButton) {
+        toggleButton.setAttribute('aria-pressed', showOther);
+        toggleButton.setAttribute('aria-label', showOther ? 'Switch back to your projects' : 'Switch to other projects');
+    }
+    if (thumbLabel) thumbLabel.innerHTML = showOther
+        ? '<i class="fas fa-globe" aria-hidden="true"></i>'
+        : '<i class="fas fa-house" aria-hidden="true"></i>';
+    if (titleEl) titleEl.textContent = showOther ? 'Other Projects' : 'AppSystem Pro';
 }
 
 function loadThemePreference() {
@@ -173,11 +243,14 @@ function loadThemePreference() {
         toggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
         toggleButton.setAttribute('aria-pressed', isDark);
         const thumbLabel = document.getElementById('switch-thumb-label');
-        if (thumbLabel) thumbLabel.textContent = isDark ? 'D' : 'L';
+        if (thumbLabel) thumbLabel.innerHTML = isDark
+            ? '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>'
+            : '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     loadThemePreference();
+    loadOtherProjectsPreference();
     initListItems();
 });
