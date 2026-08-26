@@ -233,6 +233,15 @@
     }
 
     /* Footer */
+    footer {
+        background: var(--bg-color);
+        padding-bottom: max(2rem, calc(2rem + var(--safe-area-inset-bottom)));
+    }
+
+    [data-theme="dark"] footer {
+        background: #f0f0f0;
+    }
+
     .copyright {
         padding-top: 1.5rem;
         font-size: 0.9rem;

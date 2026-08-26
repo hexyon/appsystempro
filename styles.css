@@ -634,6 +634,7 @@ footer {
     border-top: 1px solid var(--border-color);
     margin-top: 2rem;
     padding: 3rem 2rem 2.5rem;
+    background: var(--bg-color);
 }
 
 [data-theme="dark"] footer {
@@ -887,10 +888,6 @@ footer {
     .switch-thumb {
         width: 31px;
         height: 31px;
-    }
-
-    [data-theme="dark"] .switch-thumb {
-        transform: translateX(30px);
     }
 
     .footer-content {
