@@ -39,6 +39,8 @@ body {
     padding: 0;
     color: var(--text-color);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     position: relative;
     line-height: 1.7;
     overflow-x: hidden;
@@ -434,8 +436,10 @@ header {
 /* Main Content */
 main {
     max-width: 980px;
+    width: 100%;
     margin: 0 auto;
     padding: 24px 16px 48px;
+    flex: 1 0 auto;
 }
 
 /* List View Design */
@@ -635,6 +639,8 @@ footer {
     margin-top: 2rem;
     padding: 3rem 2rem 2.5rem;
     background: var(--bg-color);
+    flex-shrink: 0;
+    width: 100%;
 }
 
 [data-theme="dark"] footer {
