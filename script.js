@@ -1,4 +1,102 @@
 // ===========================================
+// Title rendering (keeps per-letter spans for hover effect)
+// ===========================================
+
+function setTitleText(el, text) {
+    if (!el) return;
+    el.innerHTML = text
+        .split('')
+        .map(ch => {
+            const isSpace = ch === ' ';
+            const cls = isSpace ? 'title-letter title-space' : 'title-letter';
+            const content = isSpace ? '&nbsp;' : ch;
+            return `<span class="${cls}">${content}</span>`;
+        })
+        .join('');
+    assignUniqueLetterColors(el);
+}
+
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// ---- Letter hover colors ----
+// Even hue-spacing by degree isn't the same as even *perceptual*
+// spacing — human eyes are much less sensitive to hue shifts in the
+// blue/purple range than in red/green, so two mathematically
+// "equally spaced" hues can still read as "purple" and "light purple".
+// To avoid that, colors come from a curated categorical palette
+// inspired by Tableau's well-known categorical color set (Tableau
+// Software, Seattle, USA) and ColorBrewer (Cynthia Brewer, Penn State
+// University, USA) — both standard, widely-used US-origin references
+// designed specifically so no two entries are mistakable for each
+// other. Each palette entry has a light-theme version (dark/vivid
+// enough to read on a light background) and a dark-theme version
+// (light/bright enough to read on a dark background) of the *same*
+// color family, so hue identity stays consistent when the theme is
+// toggled.
+const LIGHT_THEME_LETTER_COLORS = [
+    '#c0392b', // red
+    '#4e9a51', // green
+    '#b8860b', // gold
+    '#3f6fae', // blue
+    '#d4661f', // orange
+    '#8156a1', // purple
+    '#2e8b8b', // teal
+    '#b8467a', // pink
+    '#7a8a3d', // olive-green
+    '#a05252', // brick
+    '#3d7a6e', // sea green
+    '#6a5a9a', // indigo
+    '#946b3d', // brown
+    '#993d5a', // maroon-rose
+    '#357a5b', // pine
+    '#8a6b1f', // ochre
+    '#b5622f', // rust
+    '#3d5a99'  // navy
+];
+const DARK_THEME_LETTER_COLORS = [
+    '#ff8a80', // red
+    '#8bd88f', // green
+    '#f5d76e', // gold
+    '#82aaff', // blue
+    '#ffab66', // orange
+    '#c79ade', // purple
+    '#6ed4d4', // teal
+    '#f28fb8', // pink
+    '#c3d68a', // olive-green
+    '#e6a3a3', // brick
+    '#7fd6c2', // sea green
+    '#b0a3e6', // indigo
+    '#d9ac72', // brown
+    '#e695ab', // maroon-rose
+    '#8fd6ac', // pine
+    '#e6c05a', // ochre
+    '#f0a56e', // rust
+    '#9fb8ff'  // navy
+];
+
+function isDarkThemeActive() {
+    return document.documentElement.getAttribute('data-theme') === 'dark';
+}
+
+function assignUniqueLetterColors(titleEl) {
+    // Per-letter color effect removed — logo text now stays a single,
+    // consistent color (no per-letter hover coloring assigned).
+    return;
+}
+
+function initTitleHoverColor() {
+    const titleEl = document.getElementById('app-title');
+    if (!titleEl) return;
+    assignUniqueLetterColors(titleEl);
+}
+
+// ===========================================
 // Toast (replaces blocking alert() calls)
 // ===========================================
 
@@ -166,6 +264,7 @@ function toggleTheme(event) {
     if (thumbLabel) thumbLabel.innerHTML = isDark
         ? '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>'
         : '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+    assignUniqueLetterColors(document.getElementById('app-title'));
 }
 
 function toggleOtherProjectsView(event) {
@@ -189,7 +288,7 @@ function toggleOtherProjectsView(event) {
     if (thumbLabel) thumbLabel.innerHTML = showOther
         ? '<i class="fas fa-globe" aria-hidden="true"></i>'
         : '<i class="fas fa-house" aria-hidden="true"></i>';
-    if (titleEl) titleEl.textContent = showOther ? 'Other Projects' : 'AppSystem Pro';
+    setTitleText(titleEl, showOther ? 'Other Projects' : 'AppSystem Pro');
 
     try {
         localStorage.setItem('other-projects-view', showOther ? 'true' : 'false');
@@ -223,7 +322,7 @@ function loadOtherProjectsPreference() {
     if (thumbLabel) thumbLabel.innerHTML = showOther
         ? '<i class="fas fa-globe" aria-hidden="true"></i>'
         : '<i class="fas fa-house" aria-hidden="true"></i>';
-    if (titleEl) titleEl.textContent = showOther ? 'Other Projects' : 'AppSystem Pro';
+    setTitleText(titleEl, showOther ? 'Other Projects' : 'AppSystem Pro');
 }
 
 function loadThemePreference() {
@@ -253,4 +352,5 @@ document.addEventListener('DOMContentLoaded', () => {
     loadThemePreference();
     loadOtherProjectsPreference();
     initListItems();
+    initTitleHoverColor();
 });
