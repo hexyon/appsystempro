@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="AppSystem Pro">
+    <meta name="description" content="AppSystem Pro - An experimental collection of web applications by Hexy.">
+    <title>AppSystem Pro</title>
+    <link rel="icon" href="favicon.ico" type="image/png" sizes="512x512">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="mobile.css">
+</head>
+
+<body>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <header role="banner">
+        <div class="logo">
+            <h1 id="app-title">APPSYSTEM_PRO</h1>
+        </div>
+        <nav class="language-selector" aria-label="Language selection">
+            <button class="settings-button" onclick="toggleSettingsPanel()" aria-label="Open settings"
+                aria-expanded="false">
+                <i class="fas fa-cog" aria-hidden="true"></i>
+            </button>
+            <button class="header-icon-button visit-all-icon-button" onclick="openAllWebsites()"
+                aria-label="Visit all applications in new tabs" title="Visit All">
+                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+            </button>
+            <button class="default-language-button" id="language-toggle-btn" aria-label="English">EN</button>
+        </nav>
+    </header>
+
+    <!-- Settings Panel -->
+    <div class="settings-overlay" id="settings-overlay" onclick="closeSettingsPanel()"></div>
+    <div class="settings-panel" id="settings-panel" role="dialog" aria-label="Settings">
+        <div class="settings-header">
+            <h2>Settings</h2>
+            <button class="close-settings" onclick="closeSettingsPanel()" aria-label="Close settings">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="settings-content">
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span>OTHER_PROJECTS</span>
+                </div>
+                <button class="toggle-switch" id="other-projects-toggle" onclick="toggleOtherProjectsView(event)"
+                    aria-label="Toggle other projects view" aria-pressed="false">
+                    <div class="switch-track">
+                        <div class="switch-thumb" id="other-projects-thumb-label"><i class="fas fa-house" aria-hidden="true"></i></div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main role="main" aria-label="Application gallery">
+        <!-- Other Projects (blank, populated later) -->
+        <div class="apps-list other-projects-list" id="other-projects-view" style="display: none;" role="list">
+            <div class="other-projects-list-group">
+                <div class="other-projects-item" role="listitem"><span>Code Editor</span><a href="https://ceditor-tan.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Code Editor (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>Hexy Vision</span><a href="https://hexyvision.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Hexy Vision (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>Inverse Lens</span><a href="https://inverselens.lovable.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Inverse Lens (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>Blurred Image Generator</span><a href="https://blurredimagenerator.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Blurred Image Generator (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>Folder Size Analyzer</span><a href="https://foldersizeanalyzer.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Folder Size Analyzer (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>Folder Size Separator</span><a href="https://foldersizeseparator.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Folder Size Separator (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>Link Launcher</span><a href="https://softlinklauncher.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Link Launcher (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>MediaHub Player</span><a href="https://mediahubplayer.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit MediaHub Player (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>Exercise Timer</span><a href="https://modernexercisetimer.netlify.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Exercise Timer (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>Text to Image</span><a href="https://texttoimagepremium.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Text to Image (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>Word Flow</span><a href="https://wordflowsystem.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Word Flow (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>Content Plus</span><a href="https://contentpluspremium.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Content Plus (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>Smart Image Compressor</span><a href="https://smartimagecompressor.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Smart Image Compressor (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>Earth Climate Matrix</span><a href="https://earthclimatematrix.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit Earth Climate Matrix (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                <div class="other-projects-item" role="listitem"><span>MemoryPrism Pro</span><a href="https://memoryprismpro3.lovable.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Visit MemoryPrism Pro (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+            </div>
+        </div>
+        <!-- Apps List -->
+        <div class="apps-list" id="default-projects-view" role="list">
+            <!-- Media Category -->
+            <div class="list-section">
+                <h3 class="list-section-header">Media</h3>
+                <div class="list-group">
+                    <div class="list-item" data-index="3" data-category="media" role="listitem">
+                        <div class="list-item-content">
+                            <img src="icons/MediaHub/favicon.ico" alt="Media Hub Icon"
+                                class="list-icon">
+                            <div class="list-text">
+                                <div class="list-title">Media Hub</div>
+                                <div class="list-subtitle">Sleek media viewer</div>
+                            </div>
+                            <button type="button" class="list-chevron" aria-expanded="false" aria-controls="detail-3" aria-label="Toggle Media Hub description"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+                        </div>
+                        <div class="list-item-detail" id="detail-3">
+                            <p class="detail-description">A sleek media viewer web app for images and videos with a
+                                modern UI. Features include fullscreen viewing, keyboard navigation, file upload
+                                support, blur background effects, and an index system. It offers smooth transitions and
+                                a responsive design.</p>
+                            <a href="https://mediahub-siwb.onrender.com" target="_blank" rel="noopener noreferrer" class="detail-button">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Visit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design Category -->
+            <div class="list-section">
+                <h3 class="list-section-header">Design</h3>
+                <div class="list-group">
+                    <div class="list-item" data-index="4" data-category="design" role="listitem">
+                        <div class="list-item-content">
+                            <img src="icons/GradientDesigner/favicon.ico" alt="Gradient Designer Icon"
+                                class="list-icon">
+                            <div class="list-text">
+                                <div class="list-title">Gradient Designer</div>
+                                <div class="list-subtitle">Create custom gradients</div>
+                            </div>
+                            <button type="button" class="list-chevron" aria-expanded="false" aria-controls="detail-4" aria-label="Toggle Gradient Designer description"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+                        </div>
+                        <div class="list-item-detail" id="detail-4">
+                            <p class="detail-description">A dynamic Gradient Designer web app for creating, customizing,
+                                and downloading gradient backgrounds. Generate random gradients, manually select colors,
+                                extract colors from photos, and view color names. Enjoy responsive design and an
+                                interactive UI for a seamless experience.</p>
+                            <a href="https://gradientdesigner.vercel.app" target="_blank" rel="noopener noreferrer" class="detail-button">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Visit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journal Category -->
+            <div class="list-section">
+                <h3 class="list-section-header">Journal</h3>
+                <div class="list-group">
+                    <div class="list-item" data-index="5" data-category="journal" role="listitem">
+                        <div class="list-item-content">
+                            <img src="icons/MemoryPrism/favicon.ico" alt="Memory Prism Icon"
+                                class="list-icon">
+                            <div class="list-text">
+                                <div class="list-title">Memory Prism</div>
+                                <div class="list-subtitle">Online memory journal</div>
+                            </div>
+                            <button type="button" class="list-chevron" aria-expanded="false" aria-controls="detail-5" aria-label="Toggle Memory Prism description"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+                        </div>
+                        <div class="list-item-detail" id="detail-5">
+                            <p class="detail-description">An online memory that lets you easily write and save your
+                                personal entries. Use the simple editor to capture your thoughts, format them as you
+                                like, and revisit them anytime. Duplicate entries are prevented to keep your journal
+                                unique. You can also save all your entries to a file or load them back, ensuring your
+                                memories are secure and accessible.</p>
+                            <a href="https://memoryprism.vercel.app" target="_blank" rel="noopener noreferrer" class="detail-button">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Visit
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="list-item" data-index="9" data-category="journal" role="listitem">
+                        <div class="list-item-content">
+                            <img src="icons/MemoryPrism Journal/favicon.ico" alt="Memory Prism Journal Icon"
+                                class="list-icon">
+                            <div class="list-text">
+                                <div class="list-title">Memory Prism Journal</div>
+                                <div class="list-subtitle">Personal blog</div>
+                            </div>
+                            <button type="button" class="list-chevron" aria-expanded="false" aria-controls="detail-9" aria-label="Toggle Memory Prism Journal description"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+                        </div>
+                        <div class="list-item-detail" id="detail-9">
+                            <p class="detail-description">Memory Prism Journal is my personal blog where I share my thoughts, memories, ideas, and anything that inspires me. :)</p>
+                            <a href="https://memoryprismjournal.lovable.app/" target="_blank" rel="noopener noreferrer" class="detail-button">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Visit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dictionary Category -->
+            <div class="list-section">
+                <h3 class="list-section-header">Dictionary</h3>
+                <div class="list-group">
+                    <div class="list-item" data-index="6" data-category="dictionary" role="listitem">
+                        <div class="list-item-content">
+                            <img src="icons/DictionaryLens/favicon.ico"
+                                alt="Dictionary Lens Icon" class="list-icon">
+                            <div class="list-text">
+                                <div class="list-title">Dictionary Lens</div>
+                                <div class="list-subtitle">Interactive word exploration</div>
+                            </div>
+                            <button type="button" class="list-chevron" aria-expanded="false" aria-controls="detail-6" aria-label="Toggle Dictionary Lens description"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+                        </div>
+                        <div class="list-item-detail" id="detail-6">
+                            <p class="detail-description">Dictionary Lens is an interactive web application that brings
+                                words to life with definitions and visual imagery. Search for any word to see its
+                                meanings, usage examples, and related images in a clean, modern interface. Features
+                                history and a clickable mode that lets you explore word relationships by clicking on
+                                terms within definitions.</p>
+                            <a href="https://dlalternative.onrender.com" target="_blank" rel="noopener noreferrer" class="detail-button">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Visit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Category -->
+            <div class="list-section">
+                <h3 class="list-section-header">AI</h3>
+                <div class="list-group">
+                    <div class="list-item" data-index="7" data-category="ai" role="listitem">
+                        <div class="list-item-content">
+                            <img src="icons/BrainSide/favicon.ico"
+                                alt="Brain Side Icon" class="list-icon brain-side-icon">
+                            <div class="list-text">
+                                <div class="list-title">Brain Side</div>
+                                <div class="list-subtitle">Brain visualization</div>
+                            </div>
+                            <button type="button" class="list-chevron" aria-expanded="false" aria-controls="detail-7" aria-label="Toggle Brain Side description"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+                        </div>
+                        <div class="list-item-detail" id="detail-7">
+                            <p class="detail-description">AI-powered interactive brain visualization. Search any
+                                activity to see which brain regions light up.</p>
+                            <a href="https://brainsidepro.onrender.com/" target="_blank" rel="noopener noreferrer" class="detail-button">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Visit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+        <footer role="contentinfo">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <p class="footer-title">About AppSystem Pro</p>
+                    <p>An experimental collection of web applications</p>
+                </div>
+                <div class="footer-section">
+                    <p class="footer-title">Created with</p>
+                    <div class="tool-links">
+                        <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer" class="ai-tool-button"
+                            aria-label="Claude AI (opens in new tab)">
+                            <img src="logos/claude.png" alt="" class="ai-logo">Claude
+                        </a>
+                        <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-button"
+                            aria-label="ChatGPT (opens in new tab)">
+                            <img src="logos/openai.png" alt="" class="ai-logo">ChatGPT
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <p class="footer-title">Developer</p>
+                    <a href="https://github.com/hexyon" target="_blank" rel="noopener noreferrer" class="github-link"
+                        aria-label="Hexy's GitHub profile (opens in new tab)">
+                        <i class="fab fa-github" aria-hidden="true"></i>
+                        Hexy
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2026 AppSystem Pro by Hexy | All rights reserved</p>
+            </div>
+        </footer>
+
+        <script src="script.js"></script>
+</body>
+
+</html>
