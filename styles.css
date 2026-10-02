@@ -4,7 +4,7 @@
     --bg-color: #f0f0f0;
     --text-color: #333333;
     --text-color-secondary: #6c757d;
-    --border-color: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
     --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     --card-radius: 20px;
     --button-radius: 14px;
@@ -453,7 +453,7 @@ main {
 }
 
 .list-item+.list-item {
-    border-top: 0.5px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
 }
 
 .list-chevron:hover,
@@ -475,7 +475,7 @@ main {
 }
 
 .list-item.expanded .list-item-content {
-    border-bottom: 0.5px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 12px;
     margin-bottom: 12px;
 }
@@ -670,7 +670,7 @@ footer {
 }
 
 .tool-links a:hover {
-    border-color: rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 0, 0, 0.5);
 }
 
 
@@ -704,7 +704,7 @@ footer {
 }
 
 .github-link:hover {
-    border-color: rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 0, 0, 0.5);
 }
 
 
