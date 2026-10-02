@@ -155,7 +155,7 @@ function toggleOtherProjectsView(event) {
     toggleButton.setAttribute('aria-pressed', showOther);
     toggleButton.setAttribute('aria-label', showOther ? 'Switch back to your projects' : 'Switch to other projects');
     if (thumbLabel) thumbLabel.innerHTML = showOther
-        ? '<i class="fas fa-globe" aria-hidden="true"></i>'
+        ? '<i class="fas fa-check" aria-hidden="true"></i>'
         : '<i class="fas fa-house" aria-hidden="true"></i>';
     setTitleText(titleEl, showOther ? 'OTHER_PROJECTS' : 'APPSYSTEM_PRO');
 
@@ -189,7 +189,7 @@ function loadOtherProjectsPreference() {
         toggleButton.setAttribute('aria-label', showOther ? 'Switch back to your projects' : 'Switch to other projects');
     }
     if (thumbLabel) thumbLabel.innerHTML = showOther
-        ? '<i class="fas fa-globe" aria-hidden="true"></i>'
+        ? '<i class="fas fa-check" aria-hidden="true"></i>'
         : '<i class="fas fa-house" aria-hidden="true"></i>';
     setTitleText(titleEl, showOther ? 'OTHER_PROJECTS' : 'APPSYSTEM_PRO');
 }
