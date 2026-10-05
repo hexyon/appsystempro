@@ -65,10 +65,10 @@ header {
     }
 }
 .list-item.expanded { background: #f3f3f3; }
-.list-item .list-chevron svg { animation: none; transition: transform 220ms var(--settle); }
+.list-item .list-chevron svg { animation: none; transition: transform 0.2s ease; }
 .list-item.expanded .list-chevron svg { animation: none; transform: rotate(180deg); }
 .list-item:not(.expanded) .list-chevron svg { animation: none; transform: rotate(0); }
-.list-item-detail { visibility: hidden; transition: max-height 220ms var(--settle), visibility 220ms; }
+.list-item-detail { visibility: hidden; transition: max-height 0.2s ease, visibility 0.2s; }
 .list-item.expanded .list-item-detail { visibility: visible; }
 .detail-description { color: #626262; }
 

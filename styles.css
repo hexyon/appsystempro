@@ -542,13 +542,12 @@ main {
 .list-item-detail {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.12s ease-out;
+    transition: max-height 0.2s ease;
     will-change: max-height;
 }
 
 .list-item.expanded .list-item-detail {
     max-height: 500px;
-    transition-duration: 0.25s;
 }
 
 .detail-description {
