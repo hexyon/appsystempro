@@ -1,0 +1,96 @@
+:root {
+    --bg-color: #f0f0f0;
+    --text-color: #333333;
+    --text-color-secondary: #6c7075;
+    --border-color: #d5d5d5;
+    --primary-color: #666666;
+    --surface: #f8f8f8;
+    --edge-light: inset 0 1px 0 #fff;
+    --surface-shadow: 0 2px 3px #00000005, 0 8px 24px #00000006;
+    --settle: cubic-bezier(.2,.75,.25,1);
+}
+body {
+    background: radial-gradient(ellipse at 0 0, #ffffff2e, transparent 55%),
+        radial-gradient(ellipse at 100% 40%, #d4d4d42b, transparent 55%), var(--bg-color);
+    -webkit-font-smoothing: antialiased;
+}
+header {
+    background: #f3f3f3f2;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 1px 0 #ffffffb3, 0 4px 20px #00000005;
+}
+.logo h1 {
+    background: linear-gradient(160deg, #fafafa, #eaeaea);
+    box-shadow: var(--edge-light), 0 2px 4px #00000008;
+}
+.list-section {
+    background: var(--surface);
+    box-shadow: var(--edge-light), var(--surface-shadow);
+}
+.list-section-header {
+    color: #666666;
+    background: #f3f3f3;
+    box-shadow: var(--edge-light);
+}
+.list-group { background: transparent; }
+.list-item { background: #f3f3f3; }
+.list-icon {
+    filter: drop-shadow(0 2px 2px #33333314);
+}
+.list-text::before { background: #dedede; }
+.settings-button, .header-icon-button, .default-language-button,
+.list-chevron, .detail-button, .tool-links a, .github-link {
+    background: linear-gradient(155deg, #fcfcfc, #eaeaea);
+    box-shadow: var(--edge-light), 0 2px 3px #00000008;
+    color: #626262;
+    transition: background-color 160ms ease, border-color 160ms ease,
+        box-shadow 160ms ease, transform 100ms var(--settle);
+}
+.settings-button:active, .header-icon-button:active, .default-language-button:active,
+.list-chevron:active, .detail-button:active, .tool-links a:active, .github-link:active {
+    box-shadow: inset 0 1px 3px #0000001a;
+}
+
+.default-language-button:hover {
+    box-shadow: 0 2px 3px #00000008;
+}
+@media (hover: hover) {
+    .settings-button:hover, .header-icon-button:hover,
+    .list-chevron:hover, .detail-button:hover, .tool-links a:hover, .github-link:hover {
+        background: linear-gradient(155deg, #fcfcfc, #eaeaea);
+        border-color: var(--border-color); color: #444444;
+        box-shadow: var(--edge-light), 0 2px 3px #00000008;
+        opacity: 1; text-shadow: none;
+    }
+}
+.list-item.expanded { background: #f3f3f3; }
+.list-item .list-chevron svg { animation: none; transition: transform 220ms var(--settle); }
+.list-item.expanded .list-chevron svg { animation: none; transform: rotate(180deg); }
+.list-item:not(.expanded) .list-chevron svg { animation: none; transform: rotate(0); }
+.list-item-detail { visibility: hidden; transition: max-height 220ms var(--settle), visibility 220ms; }
+.list-item.expanded .list-item-detail { visibility: visible; }
+.detail-description { color: #626262; }
+
+.settings-panel {
+    --bg-color: #f0f0f0;
+    --text-color: #333333;
+    --text-color-secondary: #6c757d;
+    --border-color: rgba(0, 0, 0, 0.15);
+    --primary-color: #007AFF;
+}
+footer { background: #eaeaea80; border-top-color: #bcbcbc; box-shadow: inset 0 1px 0 #ffffffb3; }
+.footer-section { background: #f8f8f880; box-shadow: var(--edge-light); }
+.other-projects-item { background: var(--surface); box-shadow: var(--edge-light), var(--surface-shadow); }
+.other-projects-visit:hover { background: #f4f4f4; }
+.detail-button:active {
+    transform: scale(0.88);
+    transition: transform 0.07s ease;
+}
+.other-projects-visit i {
+    transition: transform 0.1s var(--settle);
+}
+.other-projects-visit:active i {
+    transform: scale(0.88);
+    transition: transform 0.07s ease;
+}

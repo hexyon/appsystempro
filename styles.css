@@ -670,7 +670,7 @@ footer {
 }
 
 .tool-links a:hover {
-    border-color: rgba(0, 0, 0, 0.5);
+    border-color: var(--border-color);
 }
 
 
@@ -704,7 +704,7 @@ footer {
 }
 
 .github-link:hover {
-    border-color: rgba(0, 0, 0, 0.5);
+    border-color: var(--border-color);
 }
 
 

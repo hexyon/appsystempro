@@ -68,10 +68,15 @@ function toggleListItem(item) {
         item.classList.remove('expanded');
         button.setAttribute('aria-expanded', 'false');
     } else {
+        document.querySelectorAll('.list-item.expanded').forEach(openItem => {
+            openItem.classList.remove('expanded');
+            openItem.querySelector('.list-chevron').setAttribute('aria-expanded', 'false');
+        });
         item.classList.add('expanded');
         button.setAttribute('aria-expanded', 'true');
         setTimeout(() => {
-            item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            if (!item.classList.contains('expanded')) return;
+            item.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
         }, 100);
     }
 }
