@@ -8,7 +8,7 @@ function setTitleText(el, text) {
         .split('')
         .map(ch => {
             const isSpace = ch === ' ';
-            const cls = isSpace ? 'title-letter title-space' : 'title-letter';
+            const cls = isSpace ? 'title-letter title-space' : ch === '_' ? 'title-letter title-underscore' : 'title-letter';
             const content = isSpace ? '&nbsp;' : ch;
             return `<span class="${cls}">${content}</span>`;
         })

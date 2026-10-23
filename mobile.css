@@ -4,6 +4,7 @@
     --safe-area-inset-bottom: env(safe-area-inset-bottom);
     --safe-area-inset-left: env(safe-area-inset-left);
 }
+
 /* ============================================
    Mobile Breakpoints
    ============================================ */
@@ -91,7 +92,7 @@
     }
 
     .list-section-header {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 400;
         padding: 14px 16px;
         margin-bottom: 0;
@@ -102,14 +103,22 @@
     }
 
     .list-item {
+        --icon-section-width: 72px;
         min-height: 72px;
         padding: 0;
         margin-bottom: 0;
     }
 
+    .list-item:has(.brain-side-icon) {
+        --icon-section-width: 72px;
+    }
+
     .list-item-content {
-        padding: 14px 16px;
-        gap: 14px;
+        padding: 0;
+    }
+
+    .list-text {
+        padding: 18px 56px 18px 12px;
     }
 
     .list-icon {
@@ -132,7 +141,7 @@
 
     .list-chevron {
         font-size: 1.1rem;
-        margin-inline-start: 4px;
+        margin-inline-start: 0;
     }
 
     .list-item-detail {
@@ -142,8 +151,8 @@
     .detail-description {
         font-size: 1.1rem;
         line-height: 1.6;
-        margin-bottom: 1rem;
-        padding: 0 16px 12px;
+        margin-bottom: 0;
+        padding: 12px 16px 16px 12px;
     }
 
     .detail-button .icon {
@@ -231,12 +240,12 @@
     /* Other Projects cards */
     .other-projects-list-group {
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 16px;
     }
 
     .other-projects-item {
         min-height: 44px;
-        padding: 1rem 1.2rem;
+        padding: 18px 16px;
         padding-inline-end: 68px;
         font-size: 1.05rem;
     }
