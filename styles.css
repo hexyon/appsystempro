@@ -366,6 +366,18 @@ header {
     flex-shrink: 0;
 }
 
+/* Pixel-art arrow for the Open All button (10x10 grid, 2px per pixel) */
+.header-icon-button .pixel-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    stroke: none;
+    flex-shrink: 0;
+    display: block;
+    shape-rendering: crispEdges;
+    image-rendering: pixelated;
+}
+
 .default-language-button:hover {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://flagcdn.com/w80/us.png'), url('https://flagcdn.com/w80/gb.png');
     background-position: center, left center, right center;
