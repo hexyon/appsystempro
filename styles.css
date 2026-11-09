@@ -56,8 +56,8 @@ header {
     background: var(--bg-color);
     border-bottom: 1px solid var(--border-color);
     box-shadow: var(--card-shadow);
-    position: sticky;
-    top: 0;
+    /* Part of the page flow: scrolls away with the content */
+    position: relative;
     z-index: 100;
 }
 
