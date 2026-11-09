@@ -51,7 +51,7 @@
         line-height: 1.25;
     }
 
-    .language-selector {
+    .header-actions {
         grid-column: 1;
         order: 2;
         justify-content: center;

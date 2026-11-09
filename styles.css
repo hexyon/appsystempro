@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;700&display=swap');
+/* Fonts are loaded from <head> to avoid a blocking @import round-trip. */
 
 :root {
     --bg-color: #f0f0f0;
@@ -6,13 +6,10 @@
     --text-color-secondary: #6c757d;
     --border-color: rgba(0, 0, 0, 0.15);
     --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    --card-radius: 20px;
     --button-radius: 14px;
     --content-radius: 0;
     --transition-standard: all 0.2s ease;
-    --bg-gradient: linear-gradient(135deg, #F5F5F7 0%, #EEEEEE 100%);
     --primary-color: #007AFF;
-    --medium-text: #ecf0f1;
 }
 
 * {
@@ -91,7 +88,7 @@ header {
     text-shadow: none;
 }
 
-/* Per-letter hover effect: static position, single random color per hover */
+/* Logo: per-letter spans keep the hover transition hook available */
 .logo h1 {
     white-space: nowrap;
     text-transform: uppercase;
@@ -110,7 +107,18 @@ header {
     color: #BD4E4E;
 }
 
-/* Per-letter hover color effect removed — logo text stays a single color */
+/* Inline SVG icon system (replaces the Font Awesome CDN) */
+.ui-icon {
+    display: block;
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
 
 /* Premium Toggle Switch with Layered Animation */
 .toggle-switch {
@@ -130,6 +138,7 @@ header {
 }
 
 .switch-track {
+    display: block;
     position: relative;
     width: 100%;
     height: 100%;
@@ -166,9 +175,43 @@ header {
     user-select: none;
 }
 
+/* Thumb glyphs: home when off, check when on (CSS-driven, no innerHTML swapping) */
+.switch-thumb .thumb-icon {
+    display: block;
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Solid house (Font Awesome 6 "house", matching v1) */
+.switch-thumb .thumb-home {
+    width: 14.625px;
+    height: 13px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 48;
+    stroke-linejoin: round;
+    overflow: visible;
+}
+
+.switch-thumb .thumb-check {
+    display: none;
+}
+
+.toggle-switch[aria-pressed="true"] .thumb-home {
+    display: none;
+}
+
+.toggle-switch[aria-pressed="true"] .thumb-check {
+    display: block;
+}
 
 .toggle-switch[aria-pressed="true"] .switch-thumb {
-    transform: translateX(33px);
+    transform: translateX(34px);
 }
 
 /* Active/pressed state */
@@ -178,7 +221,7 @@ header {
 }
 
 .toggle-switch[aria-pressed="true"]:active .switch-thumb {
-    transform: translateX(33px) scale(0.92);
+    transform: translateX(34px) scale(0.92);
     transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -193,7 +236,7 @@ header {
     animation: track-pulse 0.3s ease;
 }
 
-.language-selector {
+.header-actions {
     grid-column: 3;
     position: relative;
     display: flex;
@@ -220,9 +263,10 @@ header {
     transition: var(--transition-standard);
 }
 
-.settings-button i,
-.header-icon-button i {
-    font-size: 1.2rem;
+.settings-button .ui-icon,
+.header-icon-button .ui-icon {
+    width: 21px;
+    height: 21px;
 }
 
 .settings-button:hover,
@@ -340,11 +384,6 @@ header {
     color: var(--text-color);
 }
 
-.setting-label i {
-    font-size: 1.2rem;
-    color: var(--text-color-secondary);
-}
-
 .default-language-button {
     display: flex;
     align-items: center;
@@ -432,6 +471,31 @@ main {
     display: flex;
     flex-direction: column;
     gap: 24px;
+}
+
+/* View switching is CSS-driven: the <html> class is applied in <head> before
+   first paint, so the saved view never flashes the other one. */
+#other-projects-view {
+    display: none;
+}
+
+html.show-other-projects #other-projects-view {
+    display: flex;
+}
+
+html.show-other-projects #default-projects-view {
+    display: none;
+}
+
+/* Visible keyboard focus everywhere (mouse users see no ring) */
+:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.list-chevron:focus-visible,
+.detail-button:focus-visible {
+    outline-offset: -3px;
 }
 
 .list-section {
@@ -579,9 +643,7 @@ main {
     will-change: max-height;
 }
 
-.list-item.expanded .list-item-detail {
-    max-height: 500px;
-}
+/* The open height is measured in script.js so long descriptions can never clip. */
 
 .detail-description {
     grid-column: 2;
@@ -708,10 +770,6 @@ footer {
     transition: all 0.2s ease;
 }
 
-.tool-links a i {
-    margin-inline-end: 0.5rem;
-}
-
 .ai-logo {
     width: 18px;
     height: 18px;
@@ -750,8 +808,12 @@ footer {
     transition: all 0.2s ease;
 }
 
-.github-link i {
+.github-icon {
+    width: 18px;
+    height: 18px;
     margin-inline-end: 0.5rem;
+    fill: currentColor;
+    flex-shrink: 0;
 }
 
 .github-link:hover {
@@ -852,20 +914,8 @@ footer {
 /* Responsive Styles */
 @media (max-width: 992px) {
     header {
-        flex-direction: row;
-        flex-wrap: wrap;
         padding: 1rem;
         gap: 1rem;
-        align-items: center;
-    }
-
-    .logo {
-        flex: 1;
-        order: 1;
-    }
-
-    .language-selector {
-        order: 3;
     }
 }
 
@@ -884,15 +934,6 @@ footer {
 
     .logo h1 {
         font-size: 1.5rem;
-    }
-
-    .toggle-switch {        width: 67px;
-        height: 39px;
-    }
-
-    .switch-thumb {
-        width: 31px;
-        height: 31px;
     }
 
     .footer-content {
@@ -957,7 +998,6 @@ footer {
 .settings-panel {
     --settings-surface-color: rgba(240, 240, 240, 0.88);
     --settings-surface-solid: #f0f0f0;
-    --settings-texture-line: rgba(0, 0, 0, 0.045);
     right: -430px;
     width: min(430px, 100%);
     background: var(--settings-surface-solid);

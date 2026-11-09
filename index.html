@@ -4,18 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#f0f0f0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="AppSystem Pro">
-    <meta name="description" content="AppSystem Pro -  High-quality web applications by Hexy.">
+    <meta name="description" content="AppSystem Pro - High-quality web applications by Hexy.">
     <title>AppSystem Pro</title>
-    <link rel="icon" href="favicon.ico" type="image/png" sizes="512x512">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Social sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AppSystem Pro">
+    <meta property="og:title" content="AppSystem Pro">
+    <meta property="og:description" content="High-quality web applications by Hexy.">
+    <meta property="og:image" content="icons/icon-512.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AppSystem Pro">
+    <meta name="twitter:description" content="High-quality web applications by Hexy.">
+    <meta name="twitter:image" content="icons/icon-512.png">
+
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="mobile.css">
     <link rel="stylesheet" href="atmosphere.css">
+
+    <script>
+        // Restore the saved view before first paint so the gallery never flashes.
+        (function () {
+            try {
+                if (localStorage.getItem('other-projects-view') === 'true') {
+                    document.documentElement.classList.add('show-other-projects');
+                }
+            } catch (error) {
+                // Storage unavailable (private mode / blocked) - keep the default view.
+            }
+        })();
+    </script>
 </head>
 
 <body>
@@ -25,26 +55,29 @@
         <div class="logo">
             <h1 id="app-title">APPSYSTEM<span class="title-underscore">_</span>PRO</h1>
         </div>
-        <nav class="language-selector" aria-label="Language selection">
-            <button class="settings-button" onclick="toggleSettingsPanel()" aria-label="Open settings"
-                aria-expanded="false">
-                <i class="fas fa-cog" aria-hidden="true"></i>
+        <div class="header-actions" role="group" aria-label="Site controls">
+            <button class="settings-button" type="button" onclick="toggleSettingsPanel()" aria-label="Open settings"
+                aria-expanded="false" aria-controls="settings-panel" aria-haspopup="dialog">
+                <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
             </button>
-            <button class="header-icon-button visit-all-icon-button" onclick="openAllWebsites()"
+            <button class="header-icon-button visit-all-icon-button" type="button" onclick="openAllWebsites()"
                 aria-label="Open all applications in new tabs" title="Open All">
                 <svg class="pixel-icon" viewBox="0 0 10 10" aria-hidden="true" shape-rendering="crispEdges"><path d="M3 1h6v1H3zM8 2h1v5H8zM7 2h1v1H7zM6 3h1v1H6zM5 4h1v1H5zM4 5h1v1H4zM3 6h1v1H3zM2 7h1v1H2zM1 8h1v1H1z"></path></svg>
             </button>
             <button class="default-language-button" id="language-toggle-btn" aria-label="English">EN</button>
-        </nav>
+        </div>
     </header>
 
     <!-- Settings Panel -->
     <div class="settings-overlay" id="settings-overlay" onclick="closeSettingsPanel()"></div>
-    <div class="settings-panel" id="settings-panel" role="dialog" aria-label="Settings">
+    <div class="settings-panel" id="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
         <div class="settings-header">
-            <h2>Settings</h2>
-            <button class="close-settings" onclick="closeSettingsPanel()" aria-label="Close settings">
-                <i class="fas fa-times"></i>
+            <h2 id="settings-title">Settings</h2>
+            <button class="close-settings" type="button" onclick="closeSettingsPanel()" aria-label="Close settings">
+                <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
             </button>
         </div>
         <div class="settings-content">
@@ -52,19 +85,24 @@
                 <div class="setting-label">
                     <span>OTHER<span class="title-underscore">_</span>PROJECTS</span>
                 </div>
-                <button class="toggle-switch" id="other-projects-toggle" onclick="toggleOtherProjectsView(event)"
-                    aria-label="Toggle other projects view" aria-pressed="false">
-                    <div class="switch-track">
-                        <div class="switch-thumb" id="other-projects-thumb-label"><i class="fas fa-house" aria-hidden="true"></i></div>
-                    </div>
+                <button class="toggle-switch" id="other-projects-toggle" type="button"
+                    onclick="toggleOtherProjectsView(event)" aria-label="Show other projects" aria-pressed="false">
+                    <span class="switch-track">
+                        <span class="switch-thumb" aria-hidden="true">
+                            <svg class="thumb-icon thumb-home" viewBox="0 0 576 512">
+                                <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"></path>
+                            </svg>
+                            <svg class="thumb-icon thumb-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
+                        </span>
+                    </span>
                 </button>
             </div>
         </div>
     </div>
 
     <main role="main" aria-label="Application gallery">
-        <!-- Other Projects (blank, populated later) -->
-        <div class="apps-list other-projects-list" id="other-projects-view" style="display: none;" role="list">
+        <!-- Other Projects (hidden by default; toggled from Settings) -->
+        <div class="apps-list other-projects-list" id="other-projects-view" role="list">
             <div class="other-projects-list-group">
                 <div class="other-projects-item" role="listitem"><span>Code Editor</span><a href="https://ceditor-tan.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Open Code Editor (opens in a new tab)"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"></path></svg></a></div>
                 <div class="other-projects-item" role="listitem"><span>Hexy Vision</span><a href="https://hexyvision.vercel.app/" target="_blank" rel="noopener noreferrer" class="other-projects-visit" aria-label="Open Hexy Vision (opens in a new tab)"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"></path></svg></a></div>
@@ -89,10 +127,9 @@
             <div class="list-section">
                 <h3 class="list-section-header">Media</h3>
                 <div class="list-group">
-                    <div class="list-item" data-index="3" data-category="media" role="listitem">
+                    <div class="list-item" role="listitem">
                         <div class="list-item-content">
-                            <img src="icons/MediaHub/favicon.ico" alt="Media Hub Icon"
-                                class="list-icon">
+                            <img src="icons/MediaHub/favicon.ico" alt="Media Hub Icon" class="list-icon">
                             <div class="list-text">
                                 <div class="list-title">Media Hub</div>
                                 <div class="list-subtitle">Sleek media viewer</div>
@@ -118,7 +155,7 @@
             <div class="list-section">
                 <h3 class="list-section-header">Design</h3>
                 <div class="list-group">
-                    <div class="list-item" data-index="4" data-category="design" role="listitem">
+                    <div class="list-item" role="listitem">
                         <div class="list-item-content">
                             <img src="icons/GradientDesigner/favicon.ico" alt="Gradient Designer Icon"
                                 class="list-icon">
@@ -147,7 +184,7 @@
             <div class="list-section">
                 <h3 class="list-section-header">Journal</h3>
                 <div class="list-group">
-                    <div class="list-item" data-index="5" data-category="journal" role="listitem">
+                    <div class="list-item" role="listitem">
                         <div class="list-item-content">
                             <img src="icons/MemoryPrism/favicon.ico" alt="Memory Prism Icon"
                                 class="list-icon">
@@ -158,8 +195,8 @@
                             <button type="button" class="list-chevron" aria-expanded="false" aria-controls="detail-5" aria-label="Toggle Memory Prism description"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
                         </div>
                         <div class="list-item-detail" id="detail-5">
-                            <p class="detail-description">An online memory that lets you easily write and save your
-                                personal entries. Use the simple editor to capture your thoughts, format them as you
+                            <p class="detail-description">An online memory journal that lets you easily write and save
+                                your personal entries. Use the simple editor to capture your thoughts, format them as you
                                 like, and revisit them anytime. Duplicate entries are prevented to keep your journal
                                 unique. You can also save all your entries to a file or load them back, ensuring your
                                 memories are secure and accessible.</p>
@@ -178,7 +215,7 @@
             <div class="list-section">
                 <h3 class="list-section-header">Dictionary</h3>
                 <div class="list-group">
-                    <div class="list-item" data-index="6" data-category="dictionary" role="listitem">
+                    <div class="list-item" role="listitem">
                         <div class="list-item-content">
                             <img src="icons/DictionaryLens/favicon.ico"
                                 alt="Dictionary Lens Icon" class="list-icon">
@@ -208,7 +245,7 @@
             <div class="list-section">
                 <h3 class="list-section-header">AI</h3>
                 <div class="list-group">
-                    <div class="list-item" data-index="7" data-category="ai" role="listitem">
+                    <div class="list-item" role="listitem">
                         <div class="list-item-content">
                             <img src="icons/BrainSide/favicon.ico"
                                 alt="Brain Side Icon" class="list-icon brain-side-icon">
@@ -235,7 +272,7 @@
             <div class="list-section">
                 <h3 class="list-section-header">Space</h3>
                 <div class="list-group">
-                    <div class="list-item" data-index="10" data-category="space" role="listitem">
+                    <div class="list-item" role="listitem">
                         <div class="list-item-content">
                             <img src="icons/Solar System/favicon.ico"
                                 alt="Solar System Icon" class="list-icon">
@@ -259,40 +296,42 @@
         </div>
     </main>
 
-        <footer role="contentinfo">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <p class="footer-title">About AppSystem Pro</p>
-                    <p>Web applications built for quality experiences</p>
-                </div>
-                <div class="footer-section">
-                    <p class="footer-title">Created with</p>
-                    <div class="tool-links">
-                        <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer" class="ai-tool-button"
-                            aria-label="Claude AI (opens in new tab)">
-                            <img src="logos/claude.png" alt="" class="ai-logo">Claude
-                        </a>
-                        <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-button"
-                            aria-label="ChatGPT (opens in new tab)">
-                            <img src="logos/openai.png" alt="" class="ai-logo">ChatGPT
-                        </a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <p class="footer-title">Developer</p>
-                    <a href="https://github.com/hexyon" target="_blank" rel="noopener noreferrer" class="github-link"
-                        aria-label="Hexy's GitHub profile (opens in new tab)">
-                        <i class="fab fa-github" aria-hidden="true"></i>
-                        Hexy
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-section">
+                <p class="footer-title">About AppSystem Pro</p>
+                <p>Web applications built for quality experiences</p>
+            </div>
+            <div class="footer-section">
+                <p class="footer-title">Created with</p>
+                <div class="tool-links">
+                    <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer" class="ai-tool-button"
+                        aria-label="Claude AI (opens in new tab)">
+                        <img src="logos/claude.png" alt="" class="ai-logo">Claude
+                    </a>
+                    <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="ai-tool-button"
+                        aria-label="ChatGPT (opens in new tab)">
+                        <img src="logos/openai.png" alt="" class="ai-logo">ChatGPT
                     </a>
                 </div>
             </div>
-            <div class="copyright">
-                <p>© 2026 AppSystem Pro by Hexy | All rights reserved</p>
+            <div class="footer-section">
+                <p class="footer-title">Developer</p>
+                <a href="https://github.com/hexyon" target="_blank" rel="noopener noreferrer" class="github-link"
+                    aria-label="Hexy's GitHub profile (opens in new tab)">
+                    <svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.54 2.87 8.39 6.84 9.75.5.09.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.36 9.36 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.59.69.49A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"></path>
+                    </svg>
+                    Hexy
+                </a>
             </div>
-        </footer>
+        </div>
+        <div class="copyright">
+            <p>© 2026 AppSystem Pro by Hexy | All rights reserved</p>
+        </div>
+    </footer>
 
-        <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
