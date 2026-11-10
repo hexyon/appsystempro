@@ -1,10 +1,12 @@
-/* ===========================================
-   AppSystem Pro — interactions
-   Views, list accordions, settings drawer, toast.
-   =========================================== */
-
 var VIEW_STORAGE_KEY = 'other-projects-view';
 var root = document.documentElement;
+
+/* Static SVG markup (never user supplied, so innerHTML is safe here). */
+var CHEVRON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" ' +
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+
+var ARROW_SVG = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">' +
+    '<path d="M6 18 18 6M6 6h12v12"></path></svg>';
 
 /* ===========================================
    Title rendering (per-letter spans)
@@ -35,6 +37,147 @@ function showToast(message, duration) {
     toastTimeout = setTimeout(function () {
         toast.classList.remove('show');
     }, duration || 4000);
+}
+
+/* ===========================================
+   Rendering (data -> DOM)
+   =========================================== */
+
+function slugify(text) {
+    return String(text).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function buildAppItem(app, detailId) {
+    var item = document.createElement('li');
+    item.className = 'list-item';
+
+    /* Row: icon + text + expand chevron */
+    var content = document.createElement('div');
+    content.className = 'list-item-content';
+
+    var icon = document.createElement('img');
+    icon.src = app.icon || 'favicon.ico';
+    icon.alt = app.title + ' Icon';
+    icon.className = app.iconClass ? 'list-icon ' + app.iconClass : 'list-icon';
+    content.appendChild(icon);
+
+    var text = document.createElement('div');
+    text.className = 'list-text';
+
+    var title = document.createElement('div');
+    title.className = 'list-title';
+    title.textContent = app.title;
+
+    var subtitle = document.createElement('div');
+    subtitle.className = 'list-subtitle';
+    subtitle.textContent = app.subtitle;
+
+    text.appendChild(title);
+    text.appendChild(subtitle);
+    content.appendChild(text);
+
+    var chevron = document.createElement('button');
+    chevron.type = 'button';
+    chevron.className = 'list-chevron';
+    chevron.setAttribute('aria-expanded', 'false');
+    chevron.setAttribute('aria-controls', detailId);
+    chevron.setAttribute('aria-label', 'Toggle ' + app.title + ' description');
+    chevron.innerHTML = CHEVRON_SVG;
+    content.appendChild(chevron);
+
+    /* Detail: description + open button */
+    var detail = document.createElement('div');
+    detail.className = 'list-item-detail';
+    detail.id = detailId;
+
+    var description = document.createElement('p');
+    description.className = 'detail-description';
+    description.textContent = app.description;
+
+    var link = document.createElement('a');
+    link.className = 'detail-button';
+    link.href = app.url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.setAttribute('aria-label', 'Open ' + app.title + ' (opens in a new tab)');
+    link.innerHTML = ARROW_SVG;
+
+    detail.appendChild(description);
+    detail.appendChild(link);
+
+    item.appendChild(content);
+    item.appendChild(detail);
+    return item;
+}
+
+function renderGallery(categories, container) {
+    var fragment = document.createDocumentFragment();
+
+    categories.forEach(function (category) {
+        var section = document.createElement('section');
+        section.className = 'list-section';
+
+        var header = document.createElement('h3');
+        header.className = 'list-section-header';
+        header.textContent = category.name;
+
+        var list = document.createElement('ul');
+        list.className = 'list-group';
+
+        (category.apps || []).forEach(function (app, index) {
+            list.appendChild(buildAppItem(app, 'detail-' + slugify(category.name + '-' + app.title) + '-' + index));
+        });
+
+        section.appendChild(header);
+        section.appendChild(list);
+        fragment.appendChild(section);
+    });
+
+    container.textContent = '';
+    container.appendChild(fragment);
+}
+
+function renderOtherProjects(projects, list) {
+    var fragment = document.createDocumentFragment();
+
+    projects.forEach(function (project) {
+        var item = document.createElement('li');
+        item.className = 'other-projects-item';
+
+        var name = document.createElement('span');
+        name.textContent = project.title;
+
+        var link = document.createElement('a');
+        link.className = 'other-projects-visit';
+        link.href = project.url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.setAttribute('aria-label', 'Open ' + project.title + ' (opens in a new tab)');
+        link.innerHTML = ARROW_SVG;
+
+        item.appendChild(name);
+        item.appendChild(link);
+        fragment.appendChild(item);
+    });
+
+    list.textContent = '';
+    list.appendChild(fragment);
+}
+
+function renderContent() {
+    var data = window.APPSYSTEM_DATA;
+    if (!data) {
+        console.error('apps-data.js is missing or failed to load: nothing to render.');
+        return false;
+    }
+
+    var gallery = document.getElementById('default-projects-view');
+    var otherList = document.getElementById('other-projects-group');
+
+    if (gallery) renderGallery(data.categories || [], gallery);
+    if (otherList) renderOtherProjects(data.otherProjects || [], otherList);
+
+    return true;
 }
 
 /* ===========================================
@@ -264,28 +407,17 @@ function toggleOtherProjectsView(event) {
 }
 
 /* ===========================================
-   Service worker (offline support / installability)
-   =========================================== */
-
-function registerServiceWorker() {
-    if (!('serviceWorker' in navigator)) return;
-    if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-        return;
-    }
-    navigator.serviceWorker.register('sw.js').catch(function (error) {
-        console.warn('Service worker registration failed:', error);
-    });
-}
-
-/* ===========================================
    Init
    =========================================== */
 
 function init() {
+    renderContent();
+
     /* <head> already applied the saved class; sync ARIA + title without re-saving. */
     applyView(root.classList.contains('show-other-projects'), false);
+
     initListItems();
-    registerServiceWorker();
+    refreshExpandedHeights();
 }
 
 if (document.readyState === 'loading') {

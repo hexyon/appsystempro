@@ -91,8 +91,8 @@ header {
 .list-item .list-chevron svg { animation: none; transition: transform 0.2s ease; }
 .list-item.expanded .list-chevron svg { animation: none; transform: rotate(180deg); }
 .list-item:not(.expanded) .list-chevron svg { animation: none; transform: rotate(0); }
-.list-item-detail { visibility: hidden; transition: max-height 0.2s ease, visibility 0.2s; }
-.list-item.expanded .list-item-detail { visibility: visible; }
+/* Collapsed-state hiding lives in styles.css (base layer) so this cosmetic
+   layer is purely visual. */
 .detail-description { color: #626262; }
 
 .settings-panel {
