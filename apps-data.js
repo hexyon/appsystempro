@@ -10,7 +10,7 @@
      apps  -> array of app objects
 
    App fields:
-     title       -> app name
+     title      -> app name
      subtitle    -> one-line summary under the title
      description -> long text shown when the row is expanded
      url         -> where "open" points
