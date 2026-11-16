@@ -1,0 +1,257 @@
+:root {
+    --bg-color: #f0f0f0;
+    --text-color: #333333;
+    --text-color-secondary: #6c7075;
+    --border-color: #d5d5d5;
+    --primary-color: #666666;
+    --surface: #f8f8f8;
+    --edge-light: inset 0 1px 0 #fff;
+    --surface-shadow: 0 2px 3px #00000005, 0 8px 24px #00000006;
+    --settle: cubic-bezier(.2,.75,.25,1);
+}
+body {
+    background: radial-gradient(ellipse at 0 0, #ffffff2e, transparent 55%),
+        radial-gradient(ellipse at 100% 40%, #d4d4d42b, transparent 55%), var(--bg-color);
+    -webkit-font-smoothing: antialiased;
+}
+header {
+    background: #f3f3f3f2;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 1px 0 #ffffffb3, 0 4px 20px #00000005;
+}
+.logo h1 {
+    background: #f5f5f5;
+    box-shadow: none;
+}
+.list-section, .other-projects-item {
+    --border-color: #dedede;
+}
+.list-section {
+    background: var(--surface);
+    box-shadow: var(--edge-light), var(--surface-shadow);
+}
+.list-section-header {
+    color: #666666;
+    background: #f3f3f3;
+    box-shadow: var(--edge-light);
+}
+.list-group { background: transparent; }
+.list-item, .other-projects-item { background: #f3f3f3; }
+.list-icon {
+    filter: drop-shadow(0 2px 2px #33333314);
+}
+.list-text::before { background: #dedede; }
+.settings-button, .header-icon-button, .default-language-button,
+.list-chevron, .detail-button, .tool-links a, .github-link {
+    background: linear-gradient(155deg, #fcfcfc, #eaeaea);
+    box-shadow: var(--edge-light), 0 2px 3px #00000008;
+    color: #626262;
+    transition: background-color 160ms ease, border-color 160ms ease,
+        box-shadow 160ms ease, transform 100ms var(--settle);
+}
+.settings-button:active, .header-icon-button:active, .default-language-button:active,
+.list-chevron:active, .detail-button:active, .tool-links a:active, .github-link:active {
+    box-shadow: inset 0 1px 3px #0000001a;
+}
+
+.default-language-button:hover {
+    box-shadow: 0 2px 3px #00000008;
+}
+.list-chevron, .detail-button, .other-projects-visit {
+    background: #f4f4f4;
+}
+.list-chevron, .detail-button {
+    box-shadow: 0 2px 3px #00000008;
+}
+@media (hover: hover) {
+    .settings-button:hover, .header-icon-button:hover,
+    .list-chevron:hover, .detail-button:hover, .tool-links a:hover, .github-link:hover {
+        background: linear-gradient(155deg, #fcfcfc, #eaeaea);
+        border-color: var(--border-color); color: #444444;
+        box-shadow: var(--edge-light), 0 2px 3px #00000008;
+        opacity: 1; text-shadow: none;
+    }
+    .list-chevron:hover {
+        background: #e8e8e8;
+    }
+    .detail-button:hover, .other-projects-visit:hover {
+        background: #f4f4f4;
+    }
+    .list-chevron:hover, .detail-button:hover {
+        box-shadow: 0 2px 3px #00000008;
+    }
+}
+.settings-button, .settings-button:hover,
+.header-icon-button, .header-icon-button:hover {
+    color: #484848;
+    opacity: 1;
+}
+.list-item.expanded { background: #f3f3f3; }
+.list-item .list-chevron svg { animation: none; transition: transform 0.2s ease; }
+.list-item.expanded .list-chevron svg { animation: none; transform: rotate(180deg); }
+.list-item:not(.expanded) .list-chevron svg { animation: none; transform: rotate(0); }
+/* Collapsed-state hiding lives in styles.css (base layer) so this cosmetic
+   layer is purely visual. */
+.detail-description { color: #626262; }
+
+.settings-panel {
+    --bg-color: #f0f0f0;
+    --text-color: #333333;
+    --text-color-secondary: #6c757d;
+    --border-color: rgba(0, 0, 0, 0.15);
+    --primary-color: #007AFF;
+}
+footer { background: #eaeaea80; border-top-color: #bcbcbc; box-shadow: inset 0 1px 0 #ffffffb3; }
+.footer-section { background: #f8f8f880; box-shadow: var(--edge-light); }
+.other-projects-item { box-shadow: var(--edge-light), var(--surface-shadow); }
+.detail-button .icon, .other-projects-visit .icon {
+    transition: transform 0.1s var(--settle);
+}
+.detail-button:active .icon, .other-projects-visit:active .icon {
+    transform: scale(0.88);
+    transition: transform 0.07s ease;
+}
+
+/* ===========================================
+   Dark mode — whole site (follows the device setting)
+   =========================================== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+        --bg-color: #141414;
+        --text-color: #e4e4e4;
+        --text-color-secondary: #a3a3a3;
+        --border-color: #333333;
+        --primary-color: #a8a8a8;
+        --surface: #1c1c1c;
+        --edge-light: inset 0 1px 0 #ffffff0a;
+        --surface-shadow: 0 2px 3px #00000033, 0 8px 24px #00000040;
+        --card-shadow: 0 2px 8px #00000066;
+        --raised: linear-gradient(155deg, #2f2f2f, #232323);
+        --raised-hover: linear-gradient(155deg, #373737, #292929);
+        --raised-shadow: inset 0 1px 0 #ffffff12, 0 2px 3px #00000040;
+    }
+
+    body {
+        background: radial-gradient(ellipse at 0 0, #ffffff08, transparent 55%),
+            radial-gradient(ellipse at 100% 40%, #ffffff05, transparent 55%), var(--bg-color);
+    }
+
+    /* Header */
+    body > header {
+        --border-color: #383838;
+        background: #1b1b1b;
+        border-bottom-color: #2c2c2c;
+        box-shadow: 0 1px 0 #ffffff0a, 0 2px 12px #0000001f;
+    }
+
+    .logo h1 {
+        background: #232323;
+        border-color: #383838;
+        color: #ededed;
+    }
+
+    .title-underscore {
+        color: #d96262;
+    }
+
+    /* App list */
+    .list-section, .other-projects-item {
+        --border-color: #2e2e2e;
+    }
+    .list-section-header {
+        color: #a8a8a8;
+        background: #1a1a1a;
+    }
+    .list-item, .list-item.expanded, .other-projects-item {
+        background: #1c1c1c;
+    }
+    .list-icon {
+        filter: drop-shadow(0 2px 2px #00000066);
+    }
+    .list-text::before { background: #2e2e2e; }
+    .detail-description { color: #b8b8b8; }
+
+    /* Black line-art icons would vanish on dark: flip them to light gray */
+    .list-icon[src*="icons/MediaHub/"],
+    .list-icon[src*="icons/BrainSide/"],
+    .list-icon[src*="icons/Solar System/"] {
+        filter: invert(0.9) drop-shadow(0 2px 2px #00000066);
+    }
+    .ai-logo[src*="logos/openai"] {
+        filter: invert(0.9);
+    }
+
+    /* Raised buttons (header, footer) */
+    .settings-button, .header-icon-button, .default-language-button,
+    .tool-links a, .github-link {
+        background: var(--raised);
+        border-color: #3a3a3a;
+        box-shadow: var(--raised-shadow);
+        color: #d4d4d4;
+    }
+    .settings-button, .settings-button:hover,
+    .header-icon-button, .header-icon-button:hover {
+        color: #d4d4d4;
+    }
+    .settings-button:active, .header-icon-button:active, .default-language-button:active,
+    .list-chevron:active, .detail-button:active, .tool-links a:active, .github-link:active {
+        box-shadow: inset 0 1px 3px #00000080;
+    }
+
+    /* Flat list buttons */
+    .list-chevron, .detail-button, .other-projects-visit {
+        background: #1f1f1f;
+        color: #b0b0b0;
+    }
+    .list-chevron, .detail-button {
+        box-shadow: 0 2px 3px #00000040;
+    }
+
+    @media (hover: hover) {
+        .settings-button:hover, .header-icon-button:hover,
+        .tool-links a:hover, .github-link:hover {
+            background: var(--raised-hover);
+            border-color: #444444;
+            box-shadow: var(--raised-shadow);
+            color: #f2f2f2;
+        }
+        .list-chevron:hover { background: #2a2a2a; }
+        .detail-button:hover, .other-projects-visit:hover { background: #262626; }
+        .list-chevron:hover, .detail-button:hover { box-shadow: 0 2px 3px #00000040; }
+    }
+
+    /* Footer */
+    footer {
+        background: #10101080;
+        border-top-color: #2a2a2a;
+        box-shadow: inset 0 1px 0 #ffffff08;
+    }
+    .footer-section { background: #1c1c1c80; }
+
+    /* Settings drawer */
+    .settings-overlay { background: rgba(0, 0, 0, 0.6); }
+    .settings-panel {
+        --bg-color: #1a1a1a;
+        --text-color: #e4e4e4;
+        --text-color-secondary: #a3a3a3;
+        --border-color: #333333;
+        --primary-color: #a8a8a8;
+        --settings-surface-color: rgba(36, 36, 36, 0.9);
+        --settings-surface-solid: #1a1a1a;
+        box-shadow: -24px 0 70px rgba(0, 0, 0, 0.5);
+    }
+    .settings-header h2 { color: #e4e4e4; }
+    .settings-panel .close-settings:hover { background: rgba(255, 255, 255, 0.08); }
+    .settings-panel .switch-track {
+        background: #141414;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    .settings-panel .switch-thumb {
+        background: #2e2e2e;
+        border-color: #3e3e3e;
+        color: #d4d4d4;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+    }
+}

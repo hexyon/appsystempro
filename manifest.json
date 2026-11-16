@@ -1,0 +1,17 @@
+{
+    "name": "AppSystem Pro",
+    "short_name": "AppSystem",
+    "description": "High-quality web applications by Hexy.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#f0f0f0",
+    "theme_color": "#f0f0f0",
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "sizes": "any",
+            "type": "image/x-icon"
+        }
+    ]
+}
