@@ -1,7 +1,6 @@
 {
     "name": "AppSystem Pro",
     "short_name": "AppSystem",
-    "description": "High-quality web applications by Hexy.",
     "start_url": "./",
     "scope": "./",
     "display": "standalone",

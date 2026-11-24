@@ -1,0 +1,1312 @@
+:root {
+    --card-radius: 18px;
+    --tile-radius: 14px;
+    --card-shadow-rest: 0 1px 2px #0000000a, 0 6px 18px #00000007;
+    --card-shadow-lift: 0 2px 4px #0000000d, 0 16px 32px #00000010;
+    --tile-bg: linear-gradient(155deg, #ffffff, #ececec);
+    --soft-button-bg: linear-gradient(155deg, #fcfcfc, #eaeaea);
+}
+
+main {
+    padding-top: 28px;
+}
+
+/* ---------- Grid ---------- */
+#default-projects-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr));
+    gap: 14px;
+    align-items: start;
+}
+
+html.show-other-projects #default-projects-view {
+    display: none;
+}
+
+/* ---------- Card ---------- */
+.list-section {
+    position: relative;
+    margin: 0;
+    border: 1px solid var(--border-color);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: var(--edge-light), var(--card-shadow-rest);
+    transition: transform 0.25s var(--settle), box-shadow 0.25s var(--settle), border-color 0.25s ease;
+}
+
+@media (hover: hover) {
+    .list-section:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--edge-light), var(--card-shadow-lift);
+    }
+}
+
+/* Category header stays for screen readers; the eyebrow shows it visually */
+.list-section-header {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.list-group,
+.list-item,
+.list-item.expanded {
+    background: transparent;
+}
+
+.list-item {
+    min-height: 0;
+}
+
+.list-item + .list-item {
+    border-top: 1px solid var(--border-color);
+}
+
+/* ---------- Row: tile + text + chevron ---------- */
+.list-item-content,
+.list-item.expanded .list-item-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border: 0;
+    cursor: pointer;
+}
+
+.list-icon-tile {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: var(--tile-radius);
+    background: var(--tile-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--edge-light), 0 2px 4px #0000000a;
+}
+
+.list-icon,
+.brain-side-icon {
+    width: 30px;
+    height: 30px;
+    min-width: 0;
+    border-radius: 0;
+}
+
+.brain-side-icon {
+    width: 36px;
+    height: 36px;
+}
+
+.list-text {
+    flex: 1;
+    min-width: 0;
+    padding: 0 42px 0 0;
+    border: 0;
+}
+
+.list-eyebrow {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: var(--text-color-secondary);
+    opacity: 0.8;
+    margin-bottom: 6px;
+}
+
+.list-title {
+    font-size: 1.18rem;
+    line-height: 1.2;
+    margin: 0 0 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-subtitle {
+    font-size: 0.88rem;
+    line-height: 1.35;
+}
+
+.list-chevron {
+    top: 50%;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    transform: translateY(-50%);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.list-item .list-chevron svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ---------- Expanded detail ---------- */
+.list-item-detail {
+    display: block;
+}
+
+.detail-description {
+    margin: 0 14px;
+    padding: 12px 2px 14px;
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.detail-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: auto;
+    height: 40px;
+    min-height: 40px;
+    margin: 0 14px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--soft-button-bg);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.detail-button:visited {
+    color: var(--text-color);
+}
+
+.detail-button .icon {
+    width: 16px;
+    height: 16px;
+}
+
+@media (hover: hover) {
+    .detail-button:hover {
+        background: var(--soft-button-bg);
+        filter: brightness(1.03);
+    }
+}
+
+/* ---------- Other projects: tighter cards to match ---------- */
+.other-projects-list-group {
+    grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+    gap: 12px;
+}
+
+.other-projects-item {
+    min-height: 58px;
+    gap: 12px;
+    padding: 14px 16px;
+    padding-inline-end: 60px;
+    border-radius: 16px;
+    background: var(--surface);
+    font-size: 1.04rem;
+    line-height: 1.3;
+    box-shadow: var(--edge-light), var(--card-shadow-rest);
+}
+
+.other-projects-item span {
+    line-height: 1.3;
+}
+
+.other-projects-visit {
+    width: 46px;
+    border-start-end-radius: 16px;
+    border-end-end-radius: 16px;
+}
+
+.other-projects-visit .icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 768px) {
+    main {
+        padding-top: 1.1rem;
+    }
+
+    #default-projects-view {
+        gap: 12px;
+    }
+
+    .list-item-content,
+    .list-item.expanded .list-item-content {
+        padding: 13px;
+    }
+
+    .list-chevron {
+        right: 13px;
+    }
+
+    .list-chevron {
+        width: 36px;
+        height: 36px;
+    }
+
+    .list-text {
+        padding-right: 46px;
+    }
+
+    .other-projects-list-group {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .other-projects-item {
+        padding: 14px 16px;
+        padding-inline-end: 60px;
+    }
+}
+
+/* ---------- Dark mode ---------- */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --card-shadow-rest: 0 1px 2px #00000040, 0 6px 18px #00000033;
+        --card-shadow-lift: 0 2px 4px #00000050, 0 16px 32px #00000059;
+        --tile-bg: linear-gradient(155deg, #2c2c2c, #212121);
+        --soft-button-bg: linear-gradient(155deg, #2f2f2f, #232323);
+    }
+
+    .list-icon-tile {
+        border-color: #353535;
+        box-shadow: inset 0 1px 0 #ffffff0d, 0 2px 4px #00000040;
+    }
+
+    .detail-button,
+    .detail-button:visited {
+        border-color: #3a3a3a;
+        color: #e4e4e4;
+    }
+
+    .other-projects-item {
+        background: var(--surface);
+    }
+}
+
+/* ===========================================
+   Same size everywhere + cards stacked vertically
+   =========================================== */
+
+/* One centered column of cards, each the same width as in the 3-column grid */
+#default-projects-view {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (min-width: 769px) {
+    #default-projects-view {
+        max-width: 307px;
+    }
+}
+
+/* Every card the same height (fits a two-line summary) */
+.list-item-content,
+.list-item.expanded .list-item-content {
+    min-height: 108px;
+}
+
+/* Other projects: every tile the same height */
+.other-projects-list-group {
+    grid-auto-rows: 1fr;
+}
+
+/* ===========================================
+   Bigger scale (Apple HIG sizing)
+   - Body/summary text at 17px+ (iOS default reading size)
+   - App names at Title 2 scale (~24px)
+   - Every control at least 44 × 44px
+   - Larger icons and more generous padding
+   =========================================== */
+
+:root {
+    --card-radius: 22px;
+    --tile-radius: 18px;
+}
+
+main {
+    padding-top: 40px;
+    padding-bottom: 48px;
+}
+
+/* ---------- Header ---------- */
+.logo h1 {
+    font-size: 1.9rem;
+    padding: 0.35rem 1.15rem;
+    min-height: 52px;
+}
+
+.settings-button,
+.header-icon-button {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+}
+
+.default-language-button {
+    height: 52px;
+    width: 132px;
+    font-size: 1.06rem;
+    border-radius: 14px;
+}
+
+.settings-button .ui-icon,
+.header-icon-button .ui-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.header-icon-button .pixel-icon {
+    width: 22px;
+    height: 22px;
+}
+
+/* ---------- Cards: wider column, bigger everything ---------- */
+@media (min-width: 769px) {
+    #default-projects-view {
+        max-width: 500px;
+    }
+}
+
+#default-projects-view {
+    gap: 18px;
+}
+
+.list-item-content,
+.list-item.expanded .list-item-content {
+    gap: 20px;
+    min-height: 132px;
+    padding: 22px;
+}
+
+.list-icon-tile {
+    width: 72px;
+    height: 72px;
+}
+
+.list-icon {
+    width: 44px;
+    height: 44px;
+}
+
+.brain-side-icon {
+    width: 52px;
+    height: 52px;
+}
+
+.list-text {
+    padding-right: 60px;
+}
+
+.list-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    margin-bottom: 8px;
+}
+
+.list-title {
+    font-size: 1.45rem;
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+
+.list-subtitle {
+    font-size: 1.06rem;
+    line-height: 1.4;
+}
+
+.list-chevron {
+    right: 22px;
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+}
+
+.list-item .list-chevron svg {
+    width: 20px;
+    height: 20px;
+}
+
+.detail-description {
+    margin: 0 22px;
+    padding: 18px 2px 20px;
+    font-size: 1.06rem;
+    line-height: 1.6;
+}
+
+.detail-button {
+    height: 52px;
+    min-height: 52px;
+    margin: 0 22px 22px;
+    border-radius: 15px;
+    font-size: 1.06rem;
+}
+
+.detail-button .icon {
+    width: 19px;
+    height: 19px;
+}
+
+/* ---------- Other projects ---------- */
+.other-projects-list-group {
+    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+    gap: 16px;
+}
+
+.other-projects-item {
+    min-height: 76px;
+    padding: 18px 22px;
+    padding-inline-end: 76px;
+    border-radius: 20px;
+    font-size: 1.2rem;
+}
+
+.other-projects-visit {
+    width: 60px;
+    border-start-end-radius: 20px;
+    border-end-end-radius: 20px;
+}
+
+.other-projects-visit .icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* ---------- Phones: big but fitted to the screen ---------- */
+@media (max-width: 768px) {
+    .logo h1 {
+        font-size: 1.75rem;
+    }
+
+    main {
+        padding-top: 1.25rem;
+        padding-bottom: 2rem;
+    }
+
+    #default-projects-view {
+        gap: 14px;
+    }
+
+    .list-item-content,
+    .list-item.expanded .list-item-content {
+        gap: 16px;
+        min-height: 124px;
+        padding: 18px;
+    }
+
+    .list-icon-tile {
+        width: 64px;
+        height: 64px;
+    }
+
+    .list-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .brain-side-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .list-text {
+        padding-right: 54px;
+    }
+
+    .list-title {
+        font-size: 1.3rem;
+    }
+
+    .list-subtitle {
+        font-size: 1rem;
+    }
+
+    .list-chevron {
+        right: 18px;
+    }
+
+    .detail-description {
+        margin: 0 18px;
+    }
+
+    .detail-button {
+        margin: 0 18px 18px;
+    }
+
+    .other-projects-list-group {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .other-projects-item {
+        padding: 18px 20px;
+        padding-inline-end: 76px;
+    }
+}
+
+/* ---------- Plain icons (no box behind them) ---------- */
+.list-icon-tile {
+    width: 64px;
+    height: 64px;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.list-icon {
+    width: 58px;
+    height: 58px;
+}
+
+.brain-side-icon {
+    width: 64px;
+    height: 64px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .list-icon-tile {
+        border: 0;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .list-icon-tile {
+        width: 56px;
+        height: 56px;
+    }
+
+    .list-icon {
+        width: 52px;
+        height: 52px;
+    }
+
+    .brain-side-icon {
+        width: 56px;
+        height: 56px;
+    }
+}
+
+/* Phones: room for a two-line summary so every card matches */
+@media (max-width: 768px) {
+    .list-item-content,
+    .list-item.expanded .list-item-content {
+        min-height: 130px;
+    }
+}
+
+/* ---------- Compact Open button: fits its label, trailing edge ---------- */
+.detail-button {
+    width: fit-content;
+    height: 44px;
+    min-height: 44px;
+    padding: 0 20px;
+    margin: 0 22px 22px auto;
+    border-radius: 22px;
+    gap: 7px;
+    font-size: 1rem;
+}
+
+.detail-button .icon {
+    width: 17px;
+    height: 17px;
+}
+
+@media (max-width: 768px) {
+    .detail-button {
+        margin: 0 18px 18px auto;
+    }
+}
+
+/* Open button centered under the description */
+.detail-button {
+    margin: 0 auto 22px;
+}
+
+@media (max-width: 768px) {
+    .detail-button {
+        margin: 0 auto 18px;
+    }
+}
+
+/* ===========================================
+   3-column grid (2 on tablets, 1 on phones)
+   =========================================== */
+main {
+    max-width: 1240px;
+}
+
+#default-projects-view {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    align-items: start;
+}
+
+@media (min-width: 769px) {
+    #default-projects-view {
+        max-width: none;
+    }
+
+    /* Equal card height: fits a two-line summary at grid width */
+    .list-item-content,
+    .list-item.expanded .list-item-content {
+        min-height: 150px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+    #default-projects-view {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    #default-projects-view {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* ===========================================
+   Compact flip cards
+   Card size stays fixed: the front (icon, name, summary) turns over to
+   the back (description + Open). Nothing opens below or moves the page.
+   =========================================== */
+
+:root {
+    --flip-height: 150px;
+}
+
+/* ---------- Flip mechanics ---------- */
+.list-item {
+    display: grid;
+    height: var(--flip-height);
+    perspective: 1100px;
+}
+
+.list-item-content,
+.list-item.expanded .list-item-content,
+.list-item-detail {
+    grid-area: 1 / 1;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition: transform 0.55s var(--settle);
+}
+
+.list-item-content,
+.list-item.expanded .list-item-content {
+    position: relative;
+    height: 100%;
+    min-height: 0;
+    padding: 22px;
+    gap: 20px;
+    transform: rotateY(0deg);
+}
+
+.list-item.expanded .list-item-content {
+    transform: rotateY(180deg);
+}
+
+/* Back face: same box as the front, never grows downward */
+.list-item-detail {
+    display: flex;
+    flex-direction: column;
+    max-height: none !important;
+    height: 100%;
+    overflow: hidden;
+    padding: 18px 22px 16px;
+    transform: rotateY(-180deg);
+    visibility: hidden;
+    transition: transform 0.55s var(--settle), visibility 0s linear 0.3s;
+    cursor: pointer;
+}
+
+.list-item.expanded .list-item-detail {
+    transform: rotateY(0deg);
+    visibility: visible;
+    transition: transform 0.55s var(--settle), visibility 0s;
+}
+
+.detail-description {
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+    padding: 0 2px 6px 0;
+    border: 0;
+    overflow-y: auto;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    cursor: text;
+    /* soft fade where long text continues (it scrolls) */
+    -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent);
+    mask-image: linear-gradient(to bottom, #000 82%, transparent);
+}
+
+.detail-button,
+.list-item-detail .detail-button {
+    flex-shrink: 0;
+    width: fit-content;
+    height: 44px;
+    min-height: 44px;
+    margin: 8px auto 0;
+    padding: 0 20px;
+    border-radius: 22px;
+    font-size: 1rem;
+}
+
+.detail-button .icon {
+    width: 17px;
+    height: 17px;
+}
+
+/* ---------- Flip button: shared by both faces ---------- */
+.list-chevron,
+.list-item .list-chevron {
+    position: absolute;
+    top: 50%;
+    right: 22px;
+    bottom: auto;
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    transform: translateY(-50%);
+    border: 1px solid var(--border-color);
+    border-radius: 13px;
+    transition: top 0.3s var(--settle), transform 0.3s var(--settle);
+}
+
+/* On the back it sits at the bottom-right, level with the Open button */
+.list-item.expanded .list-chevron {
+    top: calc(100% - 16px - 44px);
+    transform: none;
+}
+
+.list-item .list-chevron svg,
+.list-item.expanded .list-chevron svg,
+.list-item:not(.expanded) .list-chevron svg {
+    width: 20px;
+    height: 20px;
+    animation: none;
+    transition: transform 0.55s var(--settle);
+}
+
+.list-item.expanded .list-chevron svg {
+    transform: rotate(180deg);
+}
+
+.list-item:not(.expanded) .list-chevron svg {
+    transform: rotate(0deg);
+}
+
+/* Phones: full width, same flip behaviour */
+@media (max-width: 768px) {
+    .list-item-content,
+    .list-item.expanded .list-item-content {
+        min-height: 0;
+        padding: 18px;
+        gap: 16px;
+    }
+
+    .list-item-detail {
+        padding: 16px 18px 14px;
+    }
+
+    .list-chevron,
+    .list-item .list-chevron {
+        right: 18px;
+    }
+
+    .list-item.expanded .list-chevron {
+        top: calc(100% - 14px - 44px);
+    }
+
+    .list-text {
+        padding-right: 54px;
+    }
+}
+
+/* ===========================================
+   Squarer cards (4:3) with a stacked front face
+   =========================================== */
+.list-item {
+    height: auto;
+    aspect-ratio: 4 / 3;
+}
+
+/* Front: icon at the top, category / name / summary at the bottom */
+.list-item-content,
+.list-item.expanded .list-item-content {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.list-icon-tile {
+    place-items: center start;
+}
+
+.list-text {
+    width: 100%;
+    flex: 0 0 auto;
+    padding-right: 0;
+}
+
+/* Flip button: top-right on the front, bottom-right on the back */
+.list-chevron,
+.list-item .list-chevron {
+    top: 22px;
+    transform: none;
+}
+
+/* Back: room for the whole description */
+.detail-description {
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+.list-item-detail .detail-description {
+    font-size: 1rem;
+    line-height: 1.55;
+}
+
+@media (max-width: 768px) {
+    .list-chevron,
+    .list-item .list-chevron {
+        top: 18px;
+    }
+}
+
+/* Exact heights (identical cards, whole description fits) */
+.list-item {
+    aspect-ratio: auto;
+    height: 300px;
+}
+
+.list-item-detail .detail-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+    .list-item {
+        height: 330px;
+    }
+}
+
+@media (max-width: 768px) {
+    .list-item {
+        height: 300px;
+    }
+
+    .list-item-detail .detail-description {
+        font-size: 0.92rem;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 380px) {
+    .list-item {
+        height: 326px;
+    }
+}
+
+/* ---------- Flip button: always bottom-right, same spot on both faces ---------- */
+.list-chevron,
+.list-item .list-chevron,
+.list-item.expanded .list-chevron {
+    top: auto;
+    bottom: 22px;
+    right: 22px;
+    transform: none;
+}
+
+/* Back face bottom padding matches, so the Open button lines up with it */
+.list-item-detail {
+    padding-bottom: 22px;
+}
+
+/* Keep the name/summary clear of the button */
+.list-text {
+    padding-right: 56px;
+}
+
+@media (max-width: 768px) {
+    .list-chevron,
+    .list-item .list-chevron,
+    .list-item.expanded .list-chevron {
+        bottom: 18px;
+        right: 18px;
+    }
+
+    .list-item-detail {
+        padding-bottom: 18px;
+    }
+
+    .list-text {
+        padding-right: 54px;
+    }
+}
+
+/* ===========================================
+   Readability pass (Apple HIG type scale)
+   - System font for UI text (SF on Apple devices), serif kept for the logo
+   - Body/description 17px with 22px-ish leading (iOS Body)
+   - App name 22px semibold (Title 2), summary 17px (Body), label 12px (Caption)
+   - Full-strength text colour for reading; secondary colour only for support text
+   =========================================== */
+
+:root {
+    --ui-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+}
+
+.list-eyebrow {
+    font-family: var(--ui-font);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    opacity: 1;
+    color: var(--text-color-secondary);
+}
+
+.list-title {
+    font-family: var(--ui-font);
+    font-size: 1.375rem;          /* 22px */
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    margin-bottom: 4px;
+    color: var(--text-color);
+}
+
+.list-subtitle {
+    font-family: var(--ui-font);
+    font-size: 1.0625rem;         /* 17px */
+    line-height: 1.35;
+    color: var(--text-color-secondary);
+}
+
+.list-item-detail .detail-description {
+    font-family: var(--ui-font);
+    font-size: 1.0625rem;         /* 17px */
+    line-height: 1.42;
+    letter-spacing: -0.005em;
+    color: var(--text-color);
+}
+
+.detail-button,
+.list-item-detail .detail-button {
+    font-family: var(--ui-font);
+    font-size: 1.0625rem;         /* 17px */
+    font-weight: 600;
+    height: 44px;
+    min-height: 44px;
+    padding: 0 22px;
+}
+
+/* Card heights sized so every 17px description fits without scrolling */
+.list-item {
+    height: 324px;
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+    .list-item {
+        height: 336px;
+    }
+}
+
+@media (max-width: 768px) {
+    .list-item {
+        height: 344px;
+    }
+}
+
+@media (max-width: 380px) {
+    .list-item {
+        height: 368px;
+    }
+}
+
+/* Only the flip button is clickable: the card faces use the normal cursor */
+.list-item-content,
+.list-item.expanded .list-item-content,
+.list-item-detail {
+    cursor: default;
+}
+
+.list-item-detail .detail-description {
+    cursor: text;
+}
+
+/* ===========================================
+   Front face: one centered group (icon + label + name + summary)
+   instead of icon-at-top / text-at-bottom with a gap between
+   =========================================== */
+.list-item-content,
+.list-item.expanded .list-item-content {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 22px 22px 40px;   /* a little extra at the bottom balances the flip button */
+    text-align: center;
+}
+
+.list-icon-tile {
+    width: 84px;
+    height: 84px;
+    place-items: center;
+}
+
+.list-icon {
+    width: 76px;
+    height: 76px;
+}
+
+.brain-side-icon {
+    width: 84px;
+    height: 84px;
+}
+
+.list-text {
+    width: 100%;
+    padding: 0;
+}
+
+.list-eyebrow {
+    margin-bottom: 6px;
+}
+
+.list-title {
+    white-space: normal;
+    margin-bottom: 4px;
+}
+
+/* Cards a little closer together */
+#default-projects-view {
+    gap: 14px;
+}
+
+@media (max-width: 768px) {
+    .list-item-content,
+    .list-item.expanded .list-item-content {
+        padding: 18px 18px 36px;
+        gap: 14px;
+    }
+
+    .list-text {
+        padding: 0;
+    }
+
+    #default-projects-view {
+        gap: 12px;
+    }
+}
+
+/* ---------- Cards stay still on hover (no lift, no shadow change) ---------- */
+.list-section {
+    transition: none;
+}
+
+@media (hover: hover) {
+    .list-section:hover {
+        transform: none;
+        box-shadow: var(--edge-light), var(--card-shadow-rest);
+    }
+}
+
+/* ---------- Icons and icon buttons stay still (no hover / press effects) ---------- */
+.settings-button,
+.header-icon-button,
+.list-chevron,
+.detail-button,
+.tool-links a,
+.github-link,
+.detail-button .icon {
+    transition: none;
+}
+
+/* Hover/press look identical to the resting look (light mode) */
+body > header .settings-button:hover,
+body > header .settings-button:active,
+body > header .header-icon-button:hover,
+body > header .header-icon-button:active {
+    background: linear-gradient(155deg, #fcfcfc, #eaeaea);
+    border-color: var(--border-color);
+    box-shadow: var(--edge-light), 0 2px 3px #00000008;
+    color: #484848;
+    opacity: 1;
+    transform: none;
+}
+
+footer .tool-links a:hover,
+footer .tool-links a:active,
+footer .github-link:hover,
+footer .github-link:active {
+    background: linear-gradient(155deg, #fcfcfc, #eaeaea);
+    border-color: var(--border-color);
+    box-shadow: var(--edge-light), 0 2px 3px #00000008;
+    color: #626262;
+    transform: none;
+}
+
+.list-item .list-chevron:hover,
+.list-item .list-chevron:active {
+    background: #f4f4f4;
+    border-color: var(--border-color);
+    box-shadow: 0 2px 3px #00000008;
+    color: #626262;
+    transform: none;
+}
+
+.list-item .detail-button:hover,
+.list-item .detail-button:active {
+    background: var(--soft-button-bg);
+    border-color: var(--border-color);
+    box-shadow: 0 2px 3px #00000008;
+    color: var(--text-color);
+    filter: none;
+    transform: none;
+}
+
+.detail-button:active .icon {
+    transform: none;
+}
+
+/* Same in dark mode */
+@media (prefers-color-scheme: dark) {
+    body > header .settings-button:hover,
+    body > header .settings-button:active,
+    body > header .header-icon-button:hover,
+    body > header .header-icon-button:active,
+    footer .tool-links a:hover,
+    footer .tool-links a:active,
+    footer .github-link:hover,
+    footer .github-link:active {
+        background: var(--raised);
+        border-color: #3a3a3a;
+        box-shadow: var(--raised-shadow);
+        color: #d4d4d4;
+    }
+
+    .list-item .list-chevron:hover,
+    .list-item .list-chevron:active {
+        background: #1f1f1f;
+        border-color: var(--border-color);
+        box-shadow: 0 2px 3px #00000040;
+        color: #b0b0b0;
+    }
+
+    .list-item .detail-button:hover,
+    .list-item .detail-button:active {
+        border-color: #3a3a3a;
+        box-shadow: 0 2px 3px #00000040;
+        color: #e4e4e4;
+    }
+}
+
+/* ---------- Settings panel: straight edges on everything ---------- */
+.settings-panel,
+.settings-panel *,
+.settings-panel .setting-item,
+.settings-panel .close-settings,
+.settings-panel .toggle-switch,
+.settings-panel .switch-track,
+.settings-panel .switch-thumb {
+    border-radius: 0;
+}
+
+/* ---------- Settings toggle: knob fills the switch (no gap inside) ---------- */
+.settings-panel .switch-thumb,
+.settings-panel .toggle-switch:active .switch-thumb {
+    top: 0;
+    left: 0;
+    width: 36px;
+    height: 100%;
+    border: 0;
+    border-right: 1px solid var(--border-color);
+    box-shadow: none;
+    transform: translateX(0);
+}
+
+.settings-panel .toggle-switch[aria-pressed="true"] .switch-thumb,
+.settings-panel .toggle-switch[aria-pressed="true"]:hover .switch-thumb,
+.settings-panel .toggle-switch[aria-pressed="true"]:active .switch-thumb {
+    transform: translateX(37px);
+    border-right: 0;
+    border-left: 1px solid var(--border-color);
+}
+
+@media (max-width: 768px) {
+    .settings-panel .switch-thumb,
+    .settings-panel .toggle-switch:active .switch-thumb {
+        width: 27px;
+    }
+
+    .settings-panel .toggle-switch[aria-pressed="true"] .switch-thumb,
+    .settings-panel .toggle-switch[aria-pressed="true"]:hover .switch-thumb,
+    .settings-panel .toggle-switch[aria-pressed="true"]:active .switch-thumb {
+        transform: translateX(27px);
+    }
+}
+
+/* Toggle flicker fix: the knob's divider line used to swap from its right
+   edge to its left edge mid-slide (borders animating), which flashed a light
+   vertical line. Use one constant divider on both sides and animate only
+   the slide itself. */
+.settings-panel .switch-thumb,
+.settings-panel .toggle-switch:active .switch-thumb,
+.settings-panel .toggle-switch[aria-pressed="true"] .switch-thumb,
+.settings-panel .toggle-switch[aria-pressed="true"]:hover .switch-thumb,
+.settings-panel .toggle-switch[aria-pressed="true"]:active .switch-thumb {
+    border: 0;
+    box-shadow: 1px 0 0 var(--border-color), -1px 0 0 var(--border-color);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.settings-panel .switch-track,
+.settings-panel .toggle-switch:active .switch-track {
+    transition: none;
+    animation: none;
+}
+
+/* ---------- Settings close button: rounded, always shows its button
+   background (no longer appears only on hover) ---------- */
+.settings-panel .close-settings,
+.settings-panel .close-settings:hover,
+.settings-panel .close-settings:active {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.08);
+    transform: none;
+    transition: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .settings-panel .close-settings,
+    .settings-panel .close-settings:hover,
+    .settings-panel .close-settings:active {
+        background: rgba(255, 255, 255, 0.08);
+    }
+}
+
+/* ---------- Logo font: Times New Roman ---------- */
+.logo h1 {
+    font-family: "Times New Roman", Times, serif;
+}

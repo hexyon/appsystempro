@@ -2,8 +2,10 @@ var VIEW_STORAGE_KEY = 'other-projects-view';
 var root = document.documentElement;
 
 /* Static SVG markup (never user supplied, so innerHTML is safe here). */
-var CHEVRON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" ' +
-    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+/* Flip arrowhead (no shaft): points down on the front, turns to point up on the back. */
+var CHEVRON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="m6 9 6 6 6-6"/></svg>';
 
 var ARROW_SVG = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">' +
     '<path d="M6 18 18 6M6 6h12v12"></path></svg>';
@@ -47,22 +49,34 @@ function slugify(text) {
     return String(text).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
-function buildAppItem(app, detailId) {
+function buildAppItem(app, detailId, categoryName) {
     var item = document.createElement('li');
     item.className = 'list-item';
 
-    /* Row: icon + text + expand chevron */
+    /* Row: icon tile + text + expand chevron */
     var content = document.createElement('div');
     content.className = 'list-item-content';
+
+    var tile = document.createElement('span');
+    tile.className = 'list-icon-tile';
 
     var icon = document.createElement('img');
     icon.src = app.icon || 'favicon.ico';
     icon.alt = app.title + ' Icon';
     icon.className = app.iconClass ? 'list-icon ' + app.iconClass : 'list-icon';
-    content.appendChild(icon);
+    tile.appendChild(icon);
+    content.appendChild(tile);
 
     var text = document.createElement('div');
     text.className = 'list-text';
+
+    if (categoryName) {
+        var eyebrow = document.createElement('div');
+        eyebrow.className = 'list-eyebrow';
+        eyebrow.setAttribute('aria-hidden', 'true');
+        eyebrow.textContent = categoryName;
+        text.appendChild(eyebrow);
+    }
 
     var title = document.createElement('div');
     title.className = 'list-title';
@@ -81,9 +95,8 @@ function buildAppItem(app, detailId) {
     chevron.className = 'list-chevron';
     chevron.setAttribute('aria-expanded', 'false');
     chevron.setAttribute('aria-controls', detailId);
-    chevron.setAttribute('aria-label', 'Toggle ' + app.title + ' description');
+    chevron.setAttribute('aria-label', 'Flip ' + app.title + ' card to show description');
     chevron.innerHTML = CHEVRON_SVG;
-    content.appendChild(chevron);
 
     /* Detail: description + open button */
     var detail = document.createElement('div');
@@ -100,12 +113,14 @@ function buildAppItem(app, detailId) {
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
     link.setAttribute('aria-label', 'Open ' + app.title + ' (opens in a new tab)');
-    link.innerHTML = ARROW_SVG;
+    link.innerHTML = '<span class="detail-button-label">Open</span>' + ARROW_SVG;
 
     detail.appendChild(description);
     detail.appendChild(link);
 
+    /* Front face, back face, and the flip button shared by both faces */
     item.appendChild(content);
+    item.appendChild(chevron);
     item.appendChild(detail);
     return item;
 }
@@ -125,7 +140,7 @@ function renderGallery(categories, container) {
         list.className = 'list-group';
 
         (category.apps || []).forEach(function (app, index) {
-            list.appendChild(buildAppItem(app, 'detail-' + slugify(category.name + '-' + app.title) + '-' + index));
+            list.appendChild(buildAppItem(app, 'detail-' + slugify(category.name + '-' + app.title) + '-' + index, category.name));
         });
 
         section.appendChild(header);
@@ -337,6 +352,7 @@ function toggleListItem(item) {
 function initListItems() {
     Array.prototype.forEach.call(document.querySelectorAll('.list-item'), function (item) {
         var button = item.querySelector('.list-chevron');
+        /* Only the flip button turns the card over. */
         if (button) button.addEventListener('click', function () { toggleListItem(item); });
     });
 }
