@@ -49,6 +49,16 @@ function slugify(text) {
     return String(text).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
+function chevronLabel(title, expanded) {
+    return (expanded ? 'Hide ' : 'Show ') + title + ' description';
+}
+
+function setChevronState(button, expanded) {
+    if (!button) return;
+    button.setAttribute('aria-expanded', String(expanded));
+    button.setAttribute('aria-label', chevronLabel(button.dataset.appTitle || 'app', expanded));
+}
+
 function buildAppItem(app, detailId, categoryName) {
     var item = document.createElement('li');
     item.className = 'list-item';
@@ -62,7 +72,7 @@ function buildAppItem(app, detailId, categoryName) {
 
     var icon = document.createElement('img');
     icon.src = app.icon || 'favicon.ico';
-    icon.alt = app.title + ' Icon';
+    icon.alt = ''; /* Decorative: the app name is right next to it. */
     icon.className = app.iconClass ? 'list-icon ' + app.iconClass : 'list-icon';
     tile.appendChild(icon);
     content.appendChild(tile);
@@ -95,7 +105,8 @@ function buildAppItem(app, detailId, categoryName) {
     chevron.className = 'list-chevron';
     chevron.setAttribute('aria-expanded', 'false');
     chevron.setAttribute('aria-controls', detailId);
-    chevron.setAttribute('aria-label', 'Flip ' + app.title + ' card to show description');
+    chevron.dataset.appTitle = app.title;
+    chevron.setAttribute('aria-label', chevronLabel(app.title, false));
     chevron.innerHTML = CHEVRON_SVG;
 
     /* Detail: description + open button */
@@ -132,7 +143,7 @@ function renderGallery(categories, container) {
         var section = document.createElement('section');
         section.className = 'list-section';
 
-        var header = document.createElement('h3');
+        var header = document.createElement('h2');
         header.className = 'list-section-header';
         header.textContent = category.name;
 
@@ -317,8 +328,7 @@ function setDetailHeight(item) {
 
 function collapseItem(item) {
     item.classList.remove('expanded');
-    var button = item.querySelector('.list-chevron');
-    if (button) button.setAttribute('aria-expanded', 'false');
+    setChevronState(item.querySelector('.list-chevron'), false);
     setDetailHeight(item);
 }
 
@@ -336,7 +346,7 @@ function toggleListItem(item) {
     );
 
     item.classList.add('expanded');
-    if (button) button.setAttribute('aria-expanded', 'true');
+    setChevronState(button, true);
 
     /* Measure on the next frame, once the expanded class has been applied. */
     requestAnimationFrame(function () {

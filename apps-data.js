@@ -29,10 +29,8 @@ window.APPSYSTEM_DATA = {
                 {
                     title: 'Media Hub',
                     subtitle: 'Sleek media viewer',
-                    description: 'A sleek media viewer web app for images and videos with a modern UI. ' +
-                        'Features include fullscreen viewing, keyboard navigation, file upload support, ' +
-                        'blur background effects, and an index system. It offers smooth transitions and ' +
-                        'a responsive design.',
+                    description: 'A media viewer for images and videos, with fullscreen viewing, ' +
+                        'keyboard navigation, file uploads, blurred backgrounds and smooth transitions.',
                     url: 'https://mediahub-siwb.onrender.com',
                     icon: 'icons/MediaHub/favicon.ico'
                 }
@@ -44,10 +42,8 @@ window.APPSYSTEM_DATA = {
                 {
                     title: 'Gradient Designer',
                     subtitle: 'Create custom gradients',
-                    description: 'A dynamic Gradient Designer web app for creating, customizing, and ' +
-                        'downloading gradient backgrounds. Generate random gradients, manually select ' +
-                        'colors, extract colors from photos, and view color names. Enjoy responsive ' +
-                        'design and an interactive UI for a seamless experience.',
+                    description: 'Create, customize and download gradient backgrounds. Generate random ' +
+                        'gradients, pick colors by hand, extract them from photos and see each color\'s name.',
                     url: 'https://gradientdesigner.vercel.app',
                     icon: 'icons/GradientDesigner/favicon.ico'
                 }
@@ -59,11 +55,8 @@ window.APPSYSTEM_DATA = {
                 {
                     title: 'Memory Prism',
                     subtitle: 'Online memory journal',
-                    description: 'An online memory journal that lets you easily write and save your ' +
-                        'personal entries. Use the simple editor to capture your thoughts, format them ' +
-                        'as you like, and revisit them anytime. Duplicate entries are prevented to keep ' +
-                        'your journal unique. You can also save all your entries to a file or load them ' +
-                        'back, ensuring your memories are secure and accessible.',
+                    description: 'A personal journal for writing and saving entries with a simple ' +
+                        'formatting editor. Export all entries to a file and load them back anytime.',
                     url: 'https://memoryprism.vercel.app',
                     icon: 'icons/MemoryPrism/favicon.ico'
                 }
@@ -75,11 +68,9 @@ window.APPSYSTEM_DATA = {
                 {
                     title: 'Dictionary Lens',
                     subtitle: 'Interactive word exploration',
-                    description: 'Dictionary Lens is an interactive web application that brings words ' +
-                        'to life with definitions and visual imagery. Search for any word to see its ' +
-                        'meanings, usage examples, and related images in a clean, modern interface. ' +
-                        'Features history and a clickable mode that lets you explore word relationships ' +
-                        'by clicking on terms within definitions.',
+                    description: 'Search any word for definitions, usage examples and related images. ' +
+                        'Click words inside definitions to explore further, and revisit past searches ' +
+                        'from your history.',
                     url: 'https://dictionarylensv3.lovable.app/',
                     icon: 'icons/DictionaryLens/favicon.ico'
                 }
@@ -90,9 +81,9 @@ window.APPSYSTEM_DATA = {
             apps: [
                 {
                     title: 'Brain Side',
-                    subtitle: 'Brain visualization',
-                    description: 'AI-powered interactive brain visualization. Search any activity to ' +
-                        'see which brain regions light up.',
+                    subtitle: 'AI brain activity map',
+                    description: 'Search any activity to see which brain regions light up, in an ' +
+                        'interactive AI-powered visualization.',
                     url: 'https://brainsidev2.lovable.app/',
                     icon: 'icons/BrainSide/favicon.ico',
                     iconClass: 'brain-side-icon'
